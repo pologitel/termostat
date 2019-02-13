@@ -1,0 +1,17 @@
+{
+    "extends": "../tslint.json",
+    "rules": {
+        "directive-selector": [
+            true,
+            "attribute",
+            "termostat",
+            "camelCase"
+        ],
+        "component-selector": [
+            true,
+            "element",
+            "termostat",
+            "kebab-case"
+        ]
+    }
+}
