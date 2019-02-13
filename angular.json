@@ -81,7 +81,8 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "termostat:build"
+            "browserTarget": "termostat:build",
+            "port": 5001
           },
           "configurations": {
             "production": {
