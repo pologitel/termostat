@@ -1,0 +1,1 @@
+export const DefaultWidthModal = 1174;
