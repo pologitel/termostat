@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { MatDialog } from '@angular/material';
 import { SettingsDialogComponent } from '../../dialogs/settings-dialog/settings-dialog.component';
 import { DefaultWidthModal } from '../../shared/common';
@@ -8,7 +8,8 @@ type TMode = 'advanced' | 'simple';
 @Component({
   selector: 'termostat-main',
   templateUrl: './main.component.html',
-  styleUrls: ['./main.component.scss']
+  styleUrls: ['./main.component.scss'],
+  encapsulation: ViewEncapsulation.ShadowDom
 })
 export class MainComponent implements OnInit {
 

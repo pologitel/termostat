@@ -5,7 +5,7 @@
     "ng": "ng",
     "start": "ng serve",
     "build": "ng build --prod",
-    "package": "cat ./dist/termostat/runtime.js ./dist/termostat/polyfills.js ./dist/termostat/scripts.js ./dist/termostat/main.js > termostat-plugin.js",
+    "package": "cat ./dist/termostat/runtime.js ./dist/termostat/polyfills.js ./dist/termostat/scripts.js ./dist/termostat/main.js > bundle-plugin/termostat-plugin.js && cat ./dist/termostat/styles.css > bundle-plugin/style.css",
     "build-plugin": "npm run build && npm run package",
     "test": "ng test",
     "lint": "ng lint",
