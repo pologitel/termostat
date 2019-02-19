@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="29px" height="24px" viewBox="0 0 29 24" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 52.2 (67145) - http://www.bohemiancoding.com/sketch -->
+    <title>ic_question_all</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <filter x="-40.4%" y="-48.7%" width="180.8%" height="197.5%" filterUnits="objectBoundingBox" id="filter-1">
+            <feGaussianBlur stdDeviation="3.87096774" in="SourceGraphic"></feGaussianBlur>
+        </filter>
+    </defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="noun_Question_622247-Copy" fill="#F0F4F7" fill-rule="nonzero">
+            <path d="M28.2945946,17.9612903 L17.8702703,1.93548387 C16.3027027,-0.464516129 12.7756757,-0.464516129 11.2472973,1.93548387 L0.822972973,17.9612903 C-0.862162162,20.5548387 1.01891892,23.9612903 4.15405405,23.9612903 L24.9635135,23.9612903 C28.0986486,23.9612903 29.9797297,20.5548387 28.2945946,17.9612903 Z" id="Shape" filter="url(#filter-1)"></path>
+            <g id="Group-6">
+                <path d="M28.2945946,17.9612903 L17.8702703,1.93548387 C16.3027027,-0.464516129 12.7756757,-0.464516129 11.2472973,1.93548387 L0.822972973,17.9612903 C-0.862162162,20.5548387 1.01891892,23.9612903 4.15405405,23.9612903 L24.9635135,23.9612903 C28.0986486,23.9612903 29.9797297,20.5548387 28.2945946,17.9612903 Z" id="Shape"></path>
+            </g>
+        </g>
+    </g>
+</svg>

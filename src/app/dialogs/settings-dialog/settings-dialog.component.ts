@@ -10,16 +10,15 @@ export class SettingsDialogComponent implements OnInit {
   @Input() mode: string;
 
   constructor(
-      @Inject(MAT_DIALOG_DATA) public matDialogData,
+      @Inject(MAT_DIALOG_DATA) public data,
       private dialogRef: MatDialogRef<any>
   ) { }
 
-  ngOnInit(): void {
-  }
+  ngOnInit(): void {}
 
   onClose(): void {
     this.dialogRef.close({
-      mode: this.matDialogData.data.mode
+      mode: this.data.mode
     })
   }
 }

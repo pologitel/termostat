@@ -1,0 +1,56 @@
+@import "variables";
+@import "mixins";
+
+$border-color: #F2F7FA;
+
+.panel {
+  border: 1px solid $border-color;
+  border-radius: 5px;
+  .mode {
+    height: 100px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    @include font-config('Helvetica', 20px, 400, #A6A5C2, 24px) {
+      letter-spacing: 0.3px;
+    }
+
+    .icon {
+      top: 10px;
+      right: 10px;
+      border-radius: 50%;
+      background: rgba(166, 165, 194, 0.13) no-repeat center center;
+      @include w_h(20px, 20px);
+
+      //& > div {
+      //  @include w_h();
+      //}
+      //
+      //& /deep/ .mat-icon {
+      //  @include w_h();
+      //}
+
+      &.cool {
+        background-image: url('/assets/ic_cool.svg');
+      }
+      &.heat {
+        background-image: url('/assets/ic_heat.svg');
+      }
+      &.auto {
+        background-image: url('/assets/ic_auto.svg');
+      }
+      &.off {
+        background-image: url('/assets/ic_off.svg');
+      }
+    }
+
+    &:nth-child(odd) {
+      border-right: 1px solid $border-color;
+    }
+
+    &:nth-child(1), &:nth-child(2) {
+      border-bottom: 1px solid $border-color;
+    }
+  }
+}

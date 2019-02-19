@@ -1,0 +1,72 @@
+@import "mixins";
+
+$d: 8px;
+$dActive: 12px;
+
+$hCircle: 18px;
+$hCircleActive: 22px;
+
+.indicator-ranger {
+  top: 50%;
+  left: 50%;
+
+  @include w_h(50%, 2px);
+  transform-origin: center left;
+  &__circle {
+    position: absolute;
+    @include w_h($hCircle, $hCircle);
+    border-radius: 50%;
+    background-color: #fff;
+    cursor: move;
+    top: -9px;
+    right: -8px;
+    transition: all ease-in 0.2s;
+    &:after {
+      position: absolute;
+      display: block;
+      content: '';
+      @include w_h($d, $d);
+      border-radius: 50%;
+      top: 50%;
+      left: 50%;
+      margin-left: -$d/2;
+      margin-top: -$d/2;
+      transition: all ease-in 0.2s;
+    }
+
+    &:before {
+      position: absolute;
+      display: block;
+      content: '';
+      @include w_h(37px, 3px);
+      top: 50%;
+      left: -35px;
+      margin-top: -1px;
+      background-color: #fff;
+    }
+
+    &.active {
+      @include w_h($hCircleActive, $hCircleActive);
+      right: -11px;
+      &:after {
+        @include w_h($dActive, $dActive);
+        margin-top: -$dActive/2;
+        margin-left: -$dActive/2;
+      }
+    }
+
+    &.cool {
+      border: 1px solid #00C5DE;
+      &:after {
+        background-color: #00C5DE;
+      }
+    }
+
+    &.hot {
+      border: 1px solid #F64F69;
+      &:after {
+        background-color: #F64F69;
+      }
+    }
+  }
+}

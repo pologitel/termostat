@@ -1,0 +1,14 @@
+@import "variables";
+@import "mixins";
+
+$d: 220px;
+
+.indicator-number-panel {
+  @include w_h($d, $d);
+  border-radius: 50%;
+  background-color: #fff;
+  left: 50%;
+  top: 50%;
+  margin-top: -$d/2;
+  margin-left: -$d/2;
+}

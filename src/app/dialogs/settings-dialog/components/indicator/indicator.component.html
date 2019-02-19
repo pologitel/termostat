@@ -1,3 +1,19 @@
-<p>
-  indicator works!
-</p>
+<!--<termostat-indicator-number-panel></termostat-indicator-number-panel>-->
+<div class="indicator-wrapper" [ngClass]="[mode]" #indicator>
+    <span
+            [ngClass]="['indicator-line-' + i]"
+            class="indicator-line position-absolute"
+            *ngFor="let el of totalElementsArr; let i = index"></span>
+
+    <termostat-indicator-ranger
+        #coolRanger
+        [mode]="'cool'"
+        [maxGraduce]="countElems"
+        [currentStep]="step"
+        [minBorderInDeg]="minBorderInRotateDeg"
+        [maxBorderInDeg]="maxBorderInRotateDeg"
+        [currentGraduceInNumber]="34"
+        [circleElement]="indicator"
+    ></termostat-indicator-ranger>
+    <termostat-indicator-number-panel></termostat-indicator-number-panel>
+</div>

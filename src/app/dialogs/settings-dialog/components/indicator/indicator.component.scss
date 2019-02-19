@@ -1,0 +1,21 @@
+@import "variables";
+@import "mixins";
+
+.indicator-wrapper {
+  @include w_h();
+  border-radius: 50%;
+
+  .indicator-line {
+    @include w_h(28px, 1px);
+    background-color: #fff;
+    opacity: 0;
+  }
+
+  &.simple {
+    background-color: #00C5DE;
+  }
+
+  &.advanced {
+    background-color: #F64F69;
+  }
+}

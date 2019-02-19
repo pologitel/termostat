@@ -1,0 +1,72 @@
+@import "mixins";
+
+.settings {
+  padding: 55px 50px 90px 50px;
+
+  &__title {
+    @include font-config('Helvetica', 32px, 800, #3F4047, 39px) {
+      letter-spacing: 1.5px;
+    }
+    &:after {
+      position: absolute;
+      display: inline-block;
+      opacity: 0.5;
+      left: 0;
+      bottom: -20px;
+      @include font-config('Helvetica', 18px, 600, #3F4047, 22px) {
+        letter-spacing: 0.5px;
+      };
+    }
+
+    &.mode-simple {
+      &:after {
+        content: 'Simple mode';
+      }
+    }
+
+    .mode-advanced {
+      &:after {
+        content: 'Advanced mode'
+      }
+    }
+  }
+
+  &__change-mode-panel {
+    margin-bottom: 40px;
+  }
+
+  &__indicator-container {
+    margin-bottom: 40px;
+
+    #indicator {
+      @include w_h(330px, 330px);
+    }
+  }
+
+  &__actions {
+    &:not(:last-child) {
+      margin-bottom: 30px;
+    }
+    button {
+      outline: none;
+      border: 1px solid rgba(0,0,0,0.05);
+      border-radius: 5px;
+      height: 40px;
+      @include font-config('Helvetica', 16px, bold, #fff, 20px) {
+        letter-spacing: 0.6px;
+      }
+      &.action-delete {
+        background-color: #F64F69;
+      }
+      &.action-complete {
+        background-color: #00C5DE;
+      }
+      &.action-close {
+        background-color: #A6A5C2;
+      }
+      &:not(:last-child) {
+        margin-right: 25px;
+      }
+    }
+  }
+}

@@ -1,2 +1,41 @@
-<termostat-indicator></termostat-indicator>
-<termostat-change-mode-panel></termostat-change-mode-panel>
+<div class="col-12">
+    <div class="settings">
+        <h1 class="settings__title position-relative" [ngClass]="['mode-' + data.mode]">{{data.title || 'Thermostat - Settings'}}</h1>
+
+        <div class="row settings__indicator-container">
+            <termostat-indicator
+                    id="indicator"
+                    class="position-relative m-auto"
+                    [mode]="data.mode"
+                    [totalElements]="120"
+            ></termostat-indicator>
+        </div>
+
+        <div class="settings__change-mode-panel row justify-content-center no-gutters">
+            <termostat-change-mode-panel></termostat-change-mode-panel>
+        </div>
+
+        <div class="settings__actions justify-content-center row no-gutters">
+            <button
+                    mat-raised-button
+                    type="button"
+                    class="col-2 action-delete"
+            >Delete</button>
+
+            <button
+                    mat-raised-button
+                    type="button"
+                    class="col-2 action-complete"
+            >Split</button>
+        </div>
+
+        <div class="settings__actions justify-content-center row">
+            <button
+                    [mat-dialog-close]="data.mode"
+                    mat-raised-button
+                    type="button"
+                    class="action-close col-2"
+            >Close</button>
+        </div>
+    </div>
+</div>

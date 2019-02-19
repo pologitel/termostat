@@ -1,0 +1,18 @@
+@import "variables";
+
+@mixin font-config($font-family, $size, $weight, $color, $line-height) {
+  font-family: $font-family;
+  font-size: $size;
+  font-weight: $weight;
+  color: $color;
+  line-height: $line-height;
+
+  @content;
+}
+
+@mixin w_h($w: 100%, $h: 100%) {
+  width: $w;
+  height: $h;
+
+  @content;
+}

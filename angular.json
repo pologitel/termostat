@@ -43,7 +43,11 @@
             "tsConfig": "src/tsconfig.app.json",
             "assets": [
               "src/favicon.ico",
-              "src/assets"
+              {
+                "glob": "**/*",
+                "input": "src/assets",
+                "output": "/assets"
+              }
             ],
             "styles": [
               "src/styles.scss",
@@ -54,6 +58,11 @@
                 "input": "node_modules/document-register-element/build/document-register-element.js"
               }
             ],
+            "stylePreprocessorOptions": {
+              "includePaths": [
+                "src/scss"
+              ]
+            },
             "es5BrowserSupport": true
           },
           "configurations": {

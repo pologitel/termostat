@@ -1,0 +1,8 @@
+<div class="indicator-ranger position-absolute" #ranger>
+  <div
+          #pickerCircle
+          class="indicator-ranger__circle"
+          [ngClass]="[mode]"
+          [class.active]="isActive"
+          (mousedown)="_onMouseDown($event)"></div>
+</div>
