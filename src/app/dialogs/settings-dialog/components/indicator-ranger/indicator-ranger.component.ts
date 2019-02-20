@@ -15,7 +15,7 @@ import {
     ChangeDetectorRef
 } from '@angular/core';
 
-type TmodeTemperature = 'coolTemterature' | 'hotTemperature';
+type TmodeTemperature = 'coolTemperature' | 'hotTemperature';
 
 interface ICenter {
   x: number;
@@ -40,7 +40,7 @@ export class IndicatorRangerComponent implements OnInit, AfterViewInit, OnChange
   @ViewChild('ranger', { read: ElementRef }) public ranger: ElementRef<HTMLElement>;
   @ViewChild('pickerCircle', { read: ElementRef }) public pickerCircle:ElementRef<HTMLElement>;
 
-  @Input() mode: TmodeTemperature = 'coolTemterature';
+  @Input() mode: TmodeTemperature = 'coolTemperature';
   @Input() currentStep: number;
   @Input() minBorderInDeg: number;
   @Input() maxBorderInDeg: number;
@@ -97,7 +97,7 @@ export class IndicatorRangerComponent implements OnInit, AfterViewInit, OnChange
         currentCornerRotate -= 360;
       }
 
-      return currentCornerRotate;
+      return +currentCornerRotate.toFixed(2);
     }
   }
 
@@ -137,7 +137,7 @@ export class IndicatorRangerComponent implements OnInit, AfterViewInit, OnChange
 
     this.changeRander.emit({
       mode: this.mode,
-      rotateInDeg: this._currentRotateInDeg.toFixed(2)
+      rotateInDeg: Number(this._currentRotateInDeg).toFixed(2)
     });
 
     this._globalHandlerDocMouseUp();

@@ -10,8 +10,18 @@ $hCircleActive: 22px;
   top: 50%;
   left: 50%;
 
-  @include w_h(50%, 2px);
+  @include w_h(50%, 1px);
   transform-origin: center left;
+  &:after {
+    position: absolute;
+    display: block;
+    content: '';
+    @include w_h(37px, 3px);
+    top: -1.5px;
+    right: 7px;
+    background-color: #fff;
+  }
+
   &__circle {
     position: absolute;
     @include w_h($hCircle, $hCircle);
@@ -34,19 +44,20 @@ $hCircleActive: 22px;
       transition: all ease-in 0.2s;
     }
 
-    &:before {
-      position: absolute;
-      display: block;
-      content: '';
-      @include w_h(37px, 3px);
-      top: 50%;
-      left: -35px;
-      margin-top: -1px;
-      background-color: #fff;
-    }
+    //&:before {
+    //  position: absolute;
+    //  display: block;
+    //  content: '';
+    //  @include w_h(37px, 3px);
+    //  top: 50%;
+    //  left: -35px;
+    //  margin-top: -1px;
+    //  background-color: #fff;
+    //}
 
     &.active {
       @include w_h($hCircleActive, $hCircleActive);
+      top: -11px;
       right: -11px;
       &:after {
         @include w_h($dActive, $dActive);
@@ -55,7 +66,7 @@ $hCircleActive: 22px;
       }
     }
 
-    &.coolTemterature {
+    &.coolTemperature {
       border: 1px solid #00C5DE;
       &:after {
         background-color: #00C5DE;
