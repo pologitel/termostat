@@ -7,13 +7,20 @@
 
     <termostat-indicator-ranger
         #coolRanger
-        [mode]="'cool'"
-        [maxGraduce]="countElems"
+        [mode]="'coolTemterature'"
+        [maxGraduce]="maxGraduceInNumber"
         [currentStep]="step"
         [minBorderInDeg]="minBorderInRotateDeg"
         [maxBorderInDeg]="maxBorderInRotateDeg"
-        [currentGraduceInNumber]="34"
+        [currentGraduceInNumber]="coolTemperature"
         [circleElement]="indicator"
+        (changeRander)="updateGraduceInNumber($event)"
     ></termostat-indicator-ranger>
-    <termostat-indicator-number-panel></termostat-indicator-number-panel>
+
+    <termostat-indicator-number-panel
+        [hotTemperature]="hotTemperature"
+        [coolTemperature]="coolTemperature"
+        [maxGraduce]="maxGraduceInNumber"
+        (changeTemperature)="updateGraduce($event)"
+    ></termostat-indicator-number-panel>
 </div>

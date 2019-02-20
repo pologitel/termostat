@@ -36,7 +36,9 @@ export class MainComponent implements OnInit {
       autoFocus: false,
       data: {
         mode: 'simple',
-        title: 'Thermostat - Settings'
+        title: 'Thermostat - Settings',
+        hotTemperature: 47,
+        coolTemperature: 63
       }
     });
 

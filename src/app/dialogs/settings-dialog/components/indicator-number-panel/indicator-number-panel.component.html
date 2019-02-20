@@ -1,3 +1,39 @@
-<div class="indicator-number-panel position-absolute">
+<div class="
+        indicator-number-panel
+        position-absolute
+        d-flex
+        justify-content-center
+        align-items-center
+        flex-column
+">
+    <mat-form-field class="indicator-number-panel__hot position-relative">
+        <input
+                matInput
+                name="hotTemperature"
+                type="number"
+                [(ngModel)]="hotTemperature"
+                (ngModelChange)="onChanged(hotTemperatureModel)"
+                (blur)="onBlur(hotTemperatureModel)"
+                (keypress)="onlyPositiveNumber($event, hotTemperatureModel)"
+                min="0"
+                [max]="maxGraduce"
+                #hotTemperatureModel="ngModel"
+        >
+    </mat-form-field>
 
+    <mat-form-field class="indicator-number-panel__cool position-relative">
+        <input
+                matInput
+                name="coolTemperature"
+                type="number"
+                [(ngModel)]="coolTemperature"
+                (ngModelChange)="onChanged(coolTemperatureModel)"
+                (blur)="onBlur(coolTemperatureModel)"
+                (keypress)="onlyPositiveNumber($event, coolTemperatureModel)"
+                min="0"
+                [max]="maxGraduce"
+                maxlength="2"
+                #coolTemperatureModel="ngModel"
+        >
+    </mat-form-field>
 </div>

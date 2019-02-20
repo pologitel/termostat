@@ -2,17 +2,20 @@ import {
     Component,
     OnInit,
     OnDestroy,
+    OnChanges,
+    SimpleChanges,
     Input,
     AfterViewInit,
-    ChangeDetectionStrategy,
     Output,
+    EventEmitter,
+    ChangeDetectionStrategy,
     ViewChild,
     ElementRef,
     Renderer2,
     ChangeDetectorRef
 } from '@angular/core';
 
-type TMode = 'cool' | 'hot';
+type TmodeTemperature = 'coolTemterature' | 'hotTemperature';
 
 interface ICenter {
   x: number;
@@ -25,16 +28,19 @@ interface ICenter {
   styleUrls: ['./indicator-ranger.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class IndicatorRangerComponent implements OnInit, AfterViewInit, OnDestroy {
+export class IndicatorRangerComponent implements OnInit, AfterViewInit, OnChanges, OnDestroy {
   private center: ICenter;
   private _globalHandlerDocMouseMove: Function;
   private _globalHandlerDocMouseUp: Function;
+  private _currentRotateInDeg: number;
   isActive: boolean = false;
+
+  @Output() changeRander: EventEmitter<any> = new EventEmitter<any>();
 
   @ViewChild('ranger', { read: ElementRef }) public ranger: ElementRef<HTMLElement>;
   @ViewChild('pickerCircle', { read: ElementRef }) public pickerCircle:ElementRef<HTMLElement>;
 
-  @Input() mode: TMode = 'cool';
+  @Input() mode: TmodeTemperature = 'coolTemterature';
   @Input() currentStep: number;
   @Input() minBorderInDeg: number;
   @Input() maxBorderInDeg: number;
@@ -61,7 +67,7 @@ export class IndicatorRangerComponent implements OnInit, AfterViewInit, OnDestro
     setTimeout(() => {
       const rangerEl: HTMLElement = this.ranger.nativeElement;
 
-      rangerEl.style.transform = `rotate(${this._findStartPosition()}deg)`;
+      rangerEl.style.transform = `rotate(${this._detectCurrentRotateInDeg(this.currentGraduceInNumber)}deg)`;
     }, 100);
 
     this.circleElement.addEventListener('mousedown', function (event: MouseEvent) {
@@ -69,13 +75,24 @@ export class IndicatorRangerComponent implements OnInit, AfterViewInit, OnDestro
     });
   }
 
-  private _findStartPosition(): number {
-    if (this.currentGraduceInNumber <= 0) {
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes.currentGraduceInNumber
+        && (typeof changes.currentGraduceInNumber.currentValue === 'number')
+        && !changes.currentGraduceInNumber.firstChange) {
+      const currentValueGraduceInNumber: number = changes.currentGraduceInNumber.currentValue;
+      const rangrEl: HTMLElement = this.ranger.nativeElement;
+
+      rangrEl.style.transform = `rotate(${this._detectCurrentRotateInDeg(currentValueGraduceInNumber)}deg)`;
+    }
+  }
+
+  private _detectCurrentRotateInDeg(currentGraguceInNumber: number): number {
+    if (currentGraguceInNumber <= 0) {
       return this.minBorderInDeg;
-    } else if (this.currentGraduceInNumber >= this.maxGraduce) {
+    } else if (currentGraguceInNumber >= this.maxGraduce) {
       return this.maxBorderInDeg;
     } else {
-      let currentCornerRotate = this.minBorderInDeg + this.currentGraduceInNumber * this.currentStep;
+      let currentCornerRotate = this.minBorderInDeg + currentGraguceInNumber * this.currentStep;
       if (currentCornerRotate >= 360) {
         currentCornerRotate -= 360;
       }
@@ -99,6 +116,7 @@ export class IndicatorRangerComponent implements OnInit, AfterViewInit, OnDestro
 
     if (rotateDeg >= this.minBorderInDeg || rotateDeg <= this.maxBorderInDeg) {
       this.ranger.nativeElement.style.transform = `rotate(${rotateDeg}deg)`;
+      this._currentRotateInDeg = rotateDeg;
     }
   }
 
@@ -116,6 +134,11 @@ export class IndicatorRangerComponent implements OnInit, AfterViewInit, OnDestro
     document.body.style.cursor = null;
     this.isActive = false;
     this._changeDetectorRef.detectChanges();
+
+    this.changeRander.emit({
+      mode: this.mode,
+      rotateInDeg: this._currentRotateInDeg.toFixed(2)
+    });
 
     this._globalHandlerDocMouseUp();
     this._globalHandlerDocMouseMove();

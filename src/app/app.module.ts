@@ -2,6 +2,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule, Injector } from '@angular/core';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpClientModule } from '@angular/common/http';
+import { FormsModule } from '@angular/forms';
 import { createCustomElement } from '@angular/elements';
 
 // material module
@@ -30,6 +31,7 @@ import { IndicatorRangerComponent } from './dialogs/settings-dialog/components/i
     IndicatorRangerComponent
   ],
   imports: [
+    FormsModule,
     MaterialModule,
     BrowserModule,
     BrowserAnimationsModule,

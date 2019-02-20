@@ -11,4 +11,30 @@ $d: 220px;
   top: 50%;
   margin-top: -$d/2;
   margin-left: -$d/2;
+
+  &__hot {
+
+  }
+
+  &__cool {
+
+  }
+
+  & /deep/ .mat-form-field {
+    width: 60px;
+    font-size: 32px;
+    .mat-form-field-wrapper {
+      padding-bottom: 0;
+    }
+    .mat-form-field-underline {
+      bottom: 0;
+    }
+    .mat-form-field-infix {
+      border-top: none;
+      padding-bottom: 2px;
+    }
+    .mat-input-element {
+      padding-left: 15%;
+    }
+  }
 }

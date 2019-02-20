@@ -55,14 +55,14 @@ $hCircleActive: 22px;
       }
     }
 
-    &.cool {
+    &.coolTemterature {
       border: 1px solid #00C5DE;
       &:after {
         background-color: #00C5DE;
       }
     }
 
-    &.hot {
+    &.hotTemperature {
       border: 1px solid #F64F69;
       &:after {
         background-color: #F64F69;
