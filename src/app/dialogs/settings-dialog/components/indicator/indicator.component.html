@@ -1,4 +1,4 @@
-<div class="indicator-wrapper" [ngClass]="[mode]" #indicator>
+<div class="indicator-wrapper" [ngClass]="[defaultBackground]" #indicator>
     <span
             [ngClass]="['indicator-line-' + i]"
             class="indicator-line position-absolute"
@@ -6,7 +6,7 @@
 
     <termostat-indicator-ranger
         #coolRanger
-        [mode]="'coolTemperature'"
+        [indicatorProperty]="'coolTemperature'"
         [maxGraduce]="maxGraduceInNumber"
         [currentStep]="step"
         [minBorderInDeg]="minBorderInRotateDeg"
@@ -14,6 +14,19 @@
         [currentGraduceInNumber]="coolTemperature"
         [circleElement]="indicator"
         (changeRander)="updateGraduceInNumber($event)"
+    ></termostat-indicator-ranger>
+
+    <termostat-indicator-ranger
+            #hotRanger
+            [indicatorProperty]="'hotTemperature'"
+            [maxGraduce]="maxGraduceInNumber"
+            [currentStep]="step"
+            [minBorderInDeg]="minBorderInRotateDeg"
+            [maxBorderInDeg]="maxBorderInRotateDeg"
+            [currentGraduceInNumber]="hotTemperature"
+            [circleElement]="indicator"
+            (changeRander)="updateGraduceInNumber($event)"
+            (changeBackground)="updateBackground($event)"
     ></termostat-indicator-ranger>
 
     <termostat-indicator-number-panel

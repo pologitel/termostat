@@ -11,6 +11,7 @@ export class IndicatorComponent implements OnInit, AfterViewInit {
   public maxBorderInRotateDeg: number;
   public minBorderInRotateDeg: number;
   public maxGraduceInNumber: number;
+  public defaultBackground: string = 'cool';
 
   @ViewChild('indicator', { read: ElementRef }) indicator: ElementRef<HTMLElement>;
   @ViewChild('coolRanger', { read: IndicatorRangerComponent }) coolRanger: IndicatorRangerComponent;
@@ -86,12 +87,21 @@ export class IndicatorComponent implements OnInit, AfterViewInit {
     this[model.name] = model.value;
   }
   
-  updateGraduceInNumber({ mode, rotateInDeg }): void {
+  updateGraduceInNumber({ indicatorProperty, rotateInDeg }): void {
     let rotate = Number(rotateInDeg);
 
     if (rotate < this.minBorderInRotateDeg) rotate += 360;
 
-    this[mode] = Math.round((rotate - this.minBorderInRotateDeg) / this.step);
+    this[indicatorProperty] = Math.round((rotate - this.minBorderInRotateDeg) / this.step);
+  }
+
+  updateBackground(bg: string): void {
+    if (bg === 'default') {
+      this.defaultBackground = 'cool';
+      return;
+    }
+
+    this.defaultBackground = bg;
   }
 
   private _updateInfoForRanger(topNumberPosition: number, bottomNumberPosition: number): void {

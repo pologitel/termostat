@@ -4,6 +4,7 @@
 .indicator-wrapper {
   @include w_h();
   border-radius: 50%;
+  transition: all ease-in 0.2s;
 
   .indicator-line {
     @include w_h(28px, 1px);
@@ -11,11 +12,11 @@
     opacity: 0;
   }
 
-  &.simple {
+  &.cool {
     background-color: #00C5DE;
   }
 
-  &.advanced {
+  &.hot {
     background-color: #F64F69;
   }
 }

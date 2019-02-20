@@ -36,11 +36,12 @@ export class IndicatorRangerComponent implements OnInit, AfterViewInit, OnChange
   isActive: boolean = false;
 
   @Output() changeRander: EventEmitter<any> = new EventEmitter<any>();
+  @Output() changeBackground: EventEmitter<any> = new EventEmitter<string>();
 
   @ViewChild('ranger', { read: ElementRef }) public ranger: ElementRef<HTMLElement>;
   @ViewChild('pickerCircle', { read: ElementRef }) public pickerCircle:ElementRef<HTMLElement>;
 
-  @Input() mode: TmodeTemperature = 'coolTemperature';
+  @Input() indicatorProperty: TmodeTemperature = 'coolTemperature';
   @Input() currentStep: number;
   @Input() minBorderInDeg: number;
   @Input() maxBorderInDeg: number;
@@ -70,9 +71,9 @@ export class IndicatorRangerComponent implements OnInit, AfterViewInit, OnChange
       rangerEl.style.transform = `rotate(${this._detectCurrentRotateInDeg(this.currentGraduceInNumber)}deg)`;
     }, 100);
 
-    this.circleElement.addEventListener('mousedown', function (event: MouseEvent) {
-      if (event.target === this) self._onMouseDown(event);
-    });
+    // this.circleElement.addEventListener('mousedown', function (event: MouseEvent) {
+    //   if (event.target === this) self._onMouseDown(event);
+    // });
   }
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -125,6 +126,7 @@ export class IndicatorRangerComponent implements OnInit, AfterViewInit, OnChange
     document.body.style.cursor = 'move';
 
     this._onMouseMove(event);
+    this.changeBackground.emit(this.indicatorProperty === 'hotTemperature' ? 'hot' : 'cool');
 
     this._globalHandlerDocMouseMove = this._renderer.listen('document', 'mousemove', this._onMouseMove.bind(this));
     this._globalHandlerDocMouseUp = this._renderer.listen('document', 'mouseup', this._onMouseUp.bind(this));
@@ -136,19 +138,21 @@ export class IndicatorRangerComponent implements OnInit, AfterViewInit, OnChange
     this._changeDetectorRef.detectChanges();
 
     this.changeRander.emit({
-      mode: this.mode,
+      indicatorProperty: this.indicatorProperty,
       rotateInDeg: Number(this._currentRotateInDeg).toFixed(2)
     });
+
+    this.changeBackground.emit('default');
 
     this._globalHandlerDocMouseUp();
     this._globalHandlerDocMouseMove();
   }
 
   ngOnDestroy(): void {
-    const self = this;
-    this.circleElement.removeEventListener('mousedown', function (event: MouseEvent) {
-        if (event.target === this) self._onMouseDown(event);
-    });
+    // const self = this;
+    // this.circleElement.removeEventListener('mousedown', function (event: MouseEvent) {
+    //     if (event.target === this) self._onMouseDown(event);
+    // });
   }
 
 }
