@@ -7,8 +7,6 @@ import { IndicatorRangerComponent } from '../indicator-ranger/indicator-ranger.c
   styleUrls: ['./indicator.component.scss']
 })
 export class IndicatorComponent implements OnInit, AfterViewInit {
-  private _listViewLines: any[] = [];
-  
   public step: number;
   public maxBorderInRotateDeg: number;
   public minBorderInRotateDeg: number;
@@ -52,11 +50,6 @@ export class IndicatorComponent implements OnInit, AfterViewInit {
     let angle: number = Math.round(totalElements / 8 + totalElements / 4) * stepAngle;
     let currentRotate: number = Math.round( totalElements / 8 + totalElements / 4) * stepRotate;
 
-    // const maxlinesInOneQuarter = Math.round(totalElements / 8);
-
-    // const topBorderInDeg = maxlinesInOneQuarter*stepRotate;
-    // const bottomBorderInDeg = 180 - maxlinesInOneQuarter*stepRotate;
-
     const lineW = 28;
     const lineH = 1;
 
@@ -79,7 +72,6 @@ export class IndicatorComponent implements OnInit, AfterViewInit {
         currentEl.style.transform = `rotate(${currentRotate}deg)`;
         currentEl.setAttribute('data-rotate-deg', currentRotate);
         currentEl.setAttribute('data-number', item);
-        this._listViewLines.push(currentEl);
       }
 
       angle += stepAngle;
