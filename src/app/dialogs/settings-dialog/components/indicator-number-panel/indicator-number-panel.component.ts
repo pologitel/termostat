@@ -26,10 +26,10 @@ export class IndicatorNumberPanelComponent implements OnInit {
   }
 
   onBlur(model: NgModel): void {
-      if (!model.value) model.reset(0);
+    if (!model.value) model.reset(0);
   }
 
-  onlyPositiveNumber(event, model: NgModel): boolean {
+  onlyPositiveNumber(event): boolean {
     const charCode = (event.which) ? event.which : event.keyCode;
 
     if (charCode > 31 && (charCode < 48 || charCode > 57)) {

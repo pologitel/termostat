@@ -13,6 +13,7 @@
         [maxBorderInDeg]="maxBorderInRotateDeg"
         [currentGraduceInNumber]="coolTemperature"
         [circleElement]="indicator"
+        [borders]="bordersForCoolTemperature"
         (changeRander)="updateGraduceInNumber($event)"
     ></termostat-indicator-ranger>
 
@@ -25,6 +26,7 @@
             [maxBorderInDeg]="maxBorderInRotateDeg"
             [currentGraduceInNumber]="hotTemperature"
             [circleElement]="indicator"
+            [borders]="bordersForHotTemperature"
             (changeRander)="updateGraduceInNumber($event)"
             (changeBackground)="updateBackground($event)"
     ></termostat-indicator-ranger>

@@ -12,12 +12,21 @@ $d: 220px;
   margin-top: -$d/2;
   margin-left: -$d/2;
 
-  &__hot {
+  .input {
+    &:before {
+      position: absolute;
+    }
+    &:after {
+      position: absolute;
+    }
+  }
 
+  &__hot {
+    color: $hot_color;
   }
 
   &__cool {
-
+    color: $cool_color;
   }
 
   & /deep/ .mat-form-field {
