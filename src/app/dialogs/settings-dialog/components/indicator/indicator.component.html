@@ -7,6 +7,7 @@
     <termostat-indicator-ranger
         #coolRanger
         [indicatorProperty]="'coolTemperature'"
+        [indicatorPropertyBorders]="'bordersForHotTemperature'"
         [maxGraduce]="maxGraduceInNumber"
         [currentStep]="step"
         [minBorderInDeg]="minBorderInRotateDeg"
@@ -15,11 +16,13 @@
         [circleElement]="indicator"
         [borders]="bordersForCoolTemperature"
         (changeRander)="updateGraduceInNumber($event)"
+        (updateBorders)="updateBorders($event)"
     ></termostat-indicator-ranger>
 
     <termostat-indicator-ranger
             #hotRanger
             [indicatorProperty]="'hotTemperature'"
+            [indicatorPropertyBorders]="'bordersForCoolTemperature'"
             [maxGraduce]="maxGraduceInNumber"
             [currentStep]="step"
             [minBorderInDeg]="minBorderInRotateDeg"
@@ -29,6 +32,7 @@
             [borders]="bordersForHotTemperature"
             (changeRander)="updateGraduceInNumber($event)"
             (changeBackground)="updateBackground($event)"
+            (updateBorders)="updateBorders($event)"
     ></termostat-indicator-ranger>
 
     <termostat-indicator-number-panel

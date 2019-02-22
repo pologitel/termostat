@@ -12,14 +12,14 @@ $d: 220px;
   margin-top: -$d/2;
   margin-left: -$d/2;
 
-  .input {
-    &:before {
-      position: absolute;
-    }
-    &:after {
-      position: absolute;
-    }
-  }
+  //.input {
+  //  &:before {
+  //    position: absolute;
+  //  }
+  //  &:after {
+  //    position: absolute;
+  //  }
+  //}
 
   &__hot {
     color: $hot_color;
@@ -44,6 +44,26 @@ $d: 220px;
     }
     .mat-input-element {
       padding-left: 15%;
+    }
+    
+    &:before {
+      content: '';
+      position: absolute;
+      display: block;
+      @include w_h(8px, 8px);
+      border-radius: 50%;
+      border: 1px solid #4E5054;
+      top: calc(0.4375em + 3px);
+      right: -14px;
+    }
+    &:after {
+      content: 'F';
+      position: absolute;
+      bottom: 0;
+      right: -14px;
+      @include font-config('Helvetica', 16px, 300, #4E5054, 20px) {
+        letter-spacing: 0.46px;
+      }
     }
   }
 }
