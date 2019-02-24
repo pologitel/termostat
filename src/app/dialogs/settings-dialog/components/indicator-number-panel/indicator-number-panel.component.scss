@@ -12,20 +12,11 @@ $d: 220px;
   margin-top: -$d/2;
   margin-left: -$d/2;
 
-  //.input {
-  //  &:before {
-  //    position: absolute;
-  //  }
-  //  &:after {
-  //    position: absolute;
-  //  }
-  //}
-
   &__hot {
     color: $hot_color;
   }
 
-  &__cool {
+  &__cold {
     color: $cool_color;
   }
 

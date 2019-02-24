@@ -6,34 +6,35 @@
         align-items-center
         flex-column
 ">
-    <mat-form-field class="indicator-number-panel__hot input position-relative">
+    <mat-form-field class="indicator-number-panel__hot position-relative">
         <input
                 matInput
                 name="hotTemperature"
                 type="number"
                 [(ngModel)]="hotTemperature"
-                (ngModelChange)="onChanged(hotTemperatureModel)"
+                (ngModelChange)="onChanged(hotTemperatureModel, 'bordersForHotTemperature')"
                 (blur)="onBlur(hotTemperatureModel)"
                 (keypress)="onlyPositiveNumber($event)"
-                min="0"
-                [max]="maxGraduce"
+                [min]="bordersForHotTemperature[0]"
+                [max]="bordersForHotTemperature[1]"
+                maxlength="2"
                 #hotTemperatureModel="ngModel"
         >
     </mat-form-field>
 
-    <mat-form-field class="indicator-number-panel__cool input position-relative">
+    <mat-form-field class="indicator-number-panel__cold position-relative">
         <input
                 matInput
-                name="coolTemperature"
+                name="coldTemperature"
                 type="number"
-                [(ngModel)]="coolTemperature"
-                (ngModelChange)="onChanged(coolTemperatureModel)"
-                (blur)="onBlur(coolTemperatureModel)"
+                [(ngModel)]="coldTemperature"
+                (ngModelChange)="onChanged(coldTemperatureModel, 'bordersForColdTemperature')"
+                (blur)="onBlur(coldTemperatureModel)"
                 (keypress)="onlyPositiveNumber($event)"
-                min="0"
-                [max]="maxGraduce"
+                [min]="bordersForColdTemperature[0]"
+                [max]="bordersForColdTemperature[1]"
                 maxlength="2"
-                #coolTemperatureModel="ngModel"
+                #coldTemperatureModel="ngModel"
         >
     </mat-form-field>
 </div>

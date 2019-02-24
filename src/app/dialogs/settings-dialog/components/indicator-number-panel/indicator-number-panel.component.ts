@@ -10,17 +10,27 @@ export class IndicatorNumberPanelComponent implements OnInit {
   @Output() changeTemperature: EventEmitter<any> = new EventEmitter<any>();
 
   @Input() hotTemperature: number;
-  @Input() coolTemperature: number;
-  @Input() maxGraduce: number;
+  @Input() coldTemperature: number;
+  @Input() bordersForColdTemperature: number[];
+  @Input() bordersForHotTemperature: number[];
 
   constructor() { }
 
   ngOnInit(): void {}
 
-  onChanged(model: NgModel) {
-    if (model.value > this.maxGraduce) model.reset(this.maxGraduce);
+  onChanged(model: NgModel, borderName: string) {
+    if (model.value < this[borderName][0]) {
+        model.reset(this[borderName][0]);
+        return;
+    }
+
+    if (model.value > this[borderName][1]) {
+        model.reset(this[borderName][1]);
+        return;
+    }
+
     this.changeTemperature.emit({
-      name: model.name,
+      borderName: model.name,
       value: model.value
     });
   }

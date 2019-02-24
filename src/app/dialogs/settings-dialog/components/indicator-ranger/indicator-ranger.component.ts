@@ -14,10 +14,8 @@ import {
     Renderer2,
     ChangeDetectorRef
 } from '@angular/core';
-import { defaultIntervalBetweenRangers } from '../../../../shared/common';
 
 type TIndicatorProperty = 'coolTemperature' | 'hotTemperature' | string;
-type TIndicatorPropertyBorder = 'bordersForCoolTemperature' | 'bordersForHotTemperature' | string;
 
 interface ICenter {
   x: number;
@@ -34,7 +32,6 @@ export class IndicatorRangerComponent implements OnInit, AfterViewInit, OnChange
   private _center: ICenter;
   private _globalHandlerDocMouseMove: Function;
   private _globalHandlerDocMouseUp: Function;
-  private _currentRotateInDeg: number;
   private _isMoved: boolean = false;
   isActive: boolean = false;
 
@@ -45,14 +42,11 @@ export class IndicatorRangerComponent implements OnInit, AfterViewInit, OnChange
   @ViewChild('ranger', { read: ElementRef }) public ranger: ElementRef<HTMLElement>;
   @ViewChild('pickerCircle', { read: ElementRef }) public pickerCircle:ElementRef<HTMLElement>;
 
-  @Input() indicatorPropertyBorders: TIndicatorPropertyBorder;
   @Input() indicatorProperty: TIndicatorProperty;
   @Input() currentStep: number;
-  @Input() minBorderInDeg: number;
-  @Input() maxBorderInDeg: number;
+  @Input() startRotateInDeg: number;
   @Input() currentGraduceInNumber: number;
-  @Input() maxGraduce: number;
-  @Input() circleElement: HTMLElement;
+  @Input() readonly circleElement: HTMLElement;
   @Input() borders: number[];
 
   constructor(
@@ -72,9 +66,10 @@ export class IndicatorRangerComponent implements OnInit, AfterViewInit, OnChange
   ngAfterViewInit(): void {
     const self = this;
     setTimeout(() => {
-      const rangerEl: HTMLElement = this.ranger.nativeElement;
+      const ranger: HTMLElement = this.ranger.nativeElement;
+      const currentGraduceInDeg = this.transformNumberToDeg(this.currentGraduceInNumber);
 
-      rangerEl.style.transform = `rotate(${this._transformNumberToDeg(this.currentGraduceInNumber)}deg)`;
+      ranger.style.transform = `rotate(${currentGraduceInDeg}deg)`;
     }, 100);
 
     // this.circleElement.addEventListener('mousedown', function (event: MouseEvent) {
@@ -89,34 +84,17 @@ export class IndicatorRangerComponent implements OnInit, AfterViewInit, OnChange
         && !changes.currentGraduceInNumber.firstChange
         && !this._isMoved
     ) {
+      const ranger: HTMLElement = this.ranger.nativeElement;
       const currentValueGraduceInNumber: number = changes.currentGraduceInNumber.currentValue;
-      const rangrEl: HTMLElement = this.ranger.nativeElement;
+      const currentGraduceInDeg = this.transformNumberToDeg(currentValueGraduceInNumber);
 
-      rangrEl.style.transform = `rotate(${this._transformNumberToDeg(currentValueGraduceInNumber)}deg)`;
+      ranger.style.transform = `rotate(${currentGraduceInDeg}deg)`;
     }
   }
 
-  private _transformNumberToDeg(currentGraguceInNumber: number): number {
-    if (currentGraguceInNumber <= 0) {
-      return this.minBorderInDeg;
-    } else if (currentGraguceInNumber >= this.maxGraduce) {
-      return this.maxBorderInDeg;
-    } else {
-      let currentCornerRotate = this.minBorderInDeg + currentGraguceInNumber * this.currentStep;
-      if (currentCornerRotate >= 360) {
-        currentCornerRotate -= 360;
-      }
-
-      return Number(currentCornerRotate.toFixed(2));
-    }
-  }
-
-  private _transformDegToNumber(rotate: number): number {
-    let _rotate = Number(rotate);
-
-    if (_rotate < this.minBorderInDeg) _rotate += 360;
-
-    return Math.round((_rotate - this.minBorderInDeg) / this.currentStep);
+  transformNumberToDeg(currentGraguceInNumber: number): number {
+    let currentCornerRotate = this.startRotateInDeg + currentGraguceInNumber * this.currentStep;
+    return Number(currentCornerRotate.toFixed(2));
   }
 
   // detect current rotate in deg by math
@@ -127,26 +105,17 @@ export class IndicatorRangerComponent implements OnInit, AfterViewInit, OnChange
     return Math.atan2(deltaY, deltaX) * 180 / Math.PI;
   }
 
-  private _checkBorders(currentRotate: number): boolean {
-    const [min, max] = this.borders;
-    const rotateInNumber = this._transformDegToNumber(currentRotate);
-
-    return rotateInNumber <= min ? rotateInNumber > min : rotateInNumber < max;
-  }
-
   private _onMouseMove(event: MouseEvent): void {
+    let [minBorder, maxBorder] = this.borders;
+
     let rotateDeg = this._rotate(event.pageX, event.pageY);
     this.isActive = true;
     this._isMoved = true;
 
-    rotateDeg = rotateDeg < 0 ? 360 + rotateDeg : rotateDeg;
+    rotateDeg = (rotateDeg < 0 || rotateDeg < this.startRotateInDeg) ? 360 + rotateDeg : rotateDeg;
 
-    if (
-        (rotateDeg >= this.minBorderInDeg || rotateDeg <= this.maxBorderInDeg)
-        && !this._checkBorders(rotateDeg)
-    ) {
+    if (rotateDeg >= minBorder && rotateDeg <= maxBorder) {
       this.ranger.nativeElement.style.transform = `rotate(${rotateDeg}deg)`;
-      this._currentRotateInDeg = rotateDeg;
 
       this.changeRander.emit({
         indicatorProperty: this.indicatorProperty,
@@ -178,14 +147,11 @@ export class IndicatorRangerComponent implements OnInit, AfterViewInit, OnChange
     // update background by default
     this.changeBackground.emit('default');
     this.updateBorders.emit({
-        bordersProperty: this.indicatorPropertyBorders,
-        currentBorders: [
-            this.currentGraduceInNumber - defaultIntervalBetweenRangers,
-            this.currentGraduceInNumber + defaultIntervalBetweenRangers
-        ]
+        currentGraduceInDeg: this.transformNumberToDeg(this.currentGraduceInNumber),
+        currentGraduceInNumber: this.currentGraduceInNumber
     });
 
-    this.ranger.nativeElement.style.transform = `rotate(${this._transformNumberToDeg(this.currentGraduceInNumber)}deg)`;
+    this.ranger.nativeElement.style.transform = `rotate(${this.transformNumberToDeg(this.currentGraduceInNumber)}deg)`;
 
     // destroy listeners
     this._globalHandlerDocMouseUp();

@@ -37,8 +37,8 @@ export class MainComponent implements OnInit {
       data: {
         mode: 'simple',
         title: 'Thermostat - Settings',
-        hotTemperature: 47,
-        coolTemperature: 50
+        coldTemperature: 12,
+        hotTemperature: 34,
       }
     });
 

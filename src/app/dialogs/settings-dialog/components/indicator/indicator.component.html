@@ -6,39 +6,32 @@
 
     <termostat-indicator-ranger
         #coolRanger
-        [indicatorProperty]="'coolTemperature'"
-        [indicatorPropertyBorders]="'bordersForHotTemperature'"
-        [maxGraduce]="maxGraduceInNumber"
+        [indicatorProperty]="'coldTemperature'"
         [currentStep]="step"
-        [minBorderInDeg]="minBorderInRotateDeg"
-        [maxBorderInDeg]="maxBorderInRotateDeg"
-        [currentGraduceInNumber]="coolTemperature"
+        [startRotateInDeg]="minBorderInRotateDeg"
+        [currentGraduceInNumber]="coldTemperature"
         [circleElement]="indicator"
-        [borders]="bordersForCoolTemperature"
+        [borders]="bordersForColdTemperature.deg"
         (changeRander)="updateGraduceInNumber($event)"
-        (updateBorders)="updateBorders($event)"
     ></termostat-indicator-ranger>
 
     <termostat-indicator-ranger
             #hotRanger
             [indicatorProperty]="'hotTemperature'"
-            [indicatorPropertyBorders]="'bordersForCoolTemperature'"
-            [maxGraduce]="maxGraduceInNumber"
             [currentStep]="step"
-            [minBorderInDeg]="minBorderInRotateDeg"
-            [maxBorderInDeg]="maxBorderInRotateDeg"
+            [startRotateInDeg]="minBorderInRotateDeg"
             [currentGraduceInNumber]="hotTemperature"
             [circleElement]="indicator"
-            [borders]="bordersForHotTemperature"
+            [borders]="bordersForHotTemperature.deg"
             (changeRander)="updateGraduceInNumber($event)"
             (changeBackground)="updateBackground($event)"
-            (updateBorders)="updateBorders($event)"
     ></termostat-indicator-ranger>
 
     <termostat-indicator-number-panel
         [hotTemperature]="hotTemperature"
-        [coolTemperature]="coolTemperature"
-        [maxGraduce]="maxGraduceInNumber"
+        [coldTemperature]="coldTemperature"
+        [bordersForColdTemperature]="bordersForColdTemperature.num"
+        [bordersForHotTemperature]="bordersForHotTemperature.num"
         (changeTemperature)="updateGraduce($event)"
     ></termostat-indicator-number-panel>
 </div>
