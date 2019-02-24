@@ -52,9 +52,11 @@ export class IndicatorComponent implements OnInit, AfterViewInit, OnDestroy {
   ngOnInit(): void {
     this.arcDiametr = this.indicator.nativeElement.getBoundingClientRect().width + 10;
 
-    of(360 / this.totalElements).pipe(delay(10)).subscribe((result) => {
-       this.step = result;
-    });
+    this._subscriptions.push(
+      of(360 / this.totalElements).pipe(delay(10)).subscribe((result: number) => {
+        this.step = result;
+      })
+    );
   }
 
   ngAfterViewInit(): void {
@@ -144,8 +146,19 @@ export class IndicatorComponent implements OnInit, AfterViewInit, OnDestroy {
     );
   }
 
-  updateGraduce(model): void {
-    this[model.borderName] = model.value;
+  updateGraduce({ borderName, borderValue, model }): void {
+    if (borderName === 'top') {
+        this[borderValue].num[1] = model.value - this.defaultIntervalBetweenRangers;
+        this[borderValue].deg[1] = this.minBorderInRotateDeg + (model.value - this.defaultIntervalBetweenRangers) * this.step;
+    }
+
+    if (borderName === 'bottom') {
+        this[borderValue].num[0] = model.value + this.defaultIntervalBetweenRangers;
+        this[borderValue].deg[0] = this.minBorderInRotateDeg + (model.value + this.defaultIntervalBetweenRangers) * this.step;
+    }
+
+    console.log(this.bordersForHotTemperature);
+    this[model.name] = model.value;
   }
   
   updateGraduceInNumber({ indicatorProperty, rotateInDeg }): void {

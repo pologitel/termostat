@@ -18,20 +18,21 @@ export class IndicatorNumberPanelComponent implements OnInit {
 
   ngOnInit(): void {}
 
-  onChanged(model: NgModel, borderName: string) {
-    if (model.value < this[borderName][0]) {
-        model.reset(this[borderName][0]);
+  onChanged(model: NgModel, borderValue: string, borderName: string) {
+    if (model.value < this[model.name][0]) {
+        model.reset(this[model.name][0]);
         return;
     }
 
-    if (model.value > this[borderName][1]) {
-        model.reset(this[borderName][1]);
+    if (model.value > this[model.name][1]) {
+        model.reset(this[model.name][1]);
         return;
     }
 
     this.changeTemperature.emit({
-      borderName: model.name,
-      value: model.value
+      borderName,
+      borderValue,
+      model
     });
   }
 

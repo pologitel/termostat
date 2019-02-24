@@ -1,6 +1,7 @@
 import { Component, OnInit, ViewEncapsulation, Input } from '@angular/core';
 import { MatDialog, MatIconRegistry } from '@angular/material';
 import { DomSanitizer } from '@angular/platform-browser';
+import { Options } from 'fullcalendar';
 
 import { SettingsDialogComponent } from '../../dialogs/settings-dialog/settings-dialog.component';
 import { DefaultWidthModal } from '../../shared/common';
