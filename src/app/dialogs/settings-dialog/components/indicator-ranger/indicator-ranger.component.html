@@ -3,6 +3,9 @@
           #pickerCircle
           class="indicator-ranger__circle"
           [ngClass]="[indicatorProperty]"
+          [style.borderColor]="colorRanger"
           [class.active]="isActive"
-          (mousedown)="onMouseDown($event)"></div>
+          (mousedown)="onMouseDown($event)">
+    <div class="indicator-ranger__circle-small" [style.backgroundColor]="colorRanger"></div>
+  </div>
 </div>

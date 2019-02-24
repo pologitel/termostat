@@ -11,7 +11,7 @@ import {
 import { Observable, of, Subscription } from 'rxjs';
 import { delay } from 'rxjs/operators';
 
-import { defaultIntervalBetweenRangers } from '../../../../shared/common';
+import { defaultBackgroundIndicator, defaultIntervalBetweenRangers } from '../../../../shared/common';
 import { IndicatorRangerComponent } from '../indicator-ranger/indicator-ranger.component';
 import { IndicatorNumberPanelComponent } from '../indicator-number-panel/indicator-number-panel.component';
 
@@ -31,7 +31,8 @@ export class IndicatorComponent implements OnInit, AfterViewInit, OnDestroy {
   public minBorderInRotateDeg: number;
   public bordersForColdTemperature: IBorders = {deg: [], num: []};
   public bordersForHotTemperature: IBorders = {deg: [], num: []};
-  public defaultBackground: string = 'cool';
+  public colorIndicator: string = defaultBackgroundIndicator;
+  public arcDiametr: number;
 
   @ViewChildren(IndicatorRangerComponent) listRangers: QueryList<IndicatorRangerComponent>;
   @ViewChild(IndicatorNumberPanelComponent) indicatorInputs: IndicatorNumberPanelComponent;
@@ -41,6 +42,7 @@ export class IndicatorComponent implements OnInit, AfterViewInit, OnDestroy {
   @Input() hotTemperature: number;
   @Input() mode: string;
   @Input() totalElements: number;
+  @Input() defaultIntervalBetweenRangers: number = defaultIntervalBetweenRangers;
   get totalElementsArr(): any[] {
     return new Array(this.totalElements);
   }
@@ -48,9 +50,11 @@ export class IndicatorComponent implements OnInit, AfterViewInit, OnDestroy {
   constructor() { }
 
   ngOnInit(): void {
-    setTimeout(() => {
-      this.step = 360 / this.totalElements;
-    }, 0);
+    this.arcDiametr = this.indicator.nativeElement.getBoundingClientRect().width + 10;
+
+    of(360 / this.totalElements).pipe(delay(10)).subscribe((result) => {
+       this.step = result;
+    });
   }
 
   ngAfterViewInit(): void {
@@ -67,13 +71,13 @@ export class IndicatorComponent implements OnInit, AfterViewInit, OnDestroy {
           });
 
           if (prevRanger) {
-            prevRanger.borders[1] = currentGraduceInDeg - defaultIntervalBetweenRangers * this.step;
-            this.indicatorInputs.bordersForColdTemperature[1] = currentGraduceInNumber - defaultIntervalBetweenRangers;
+            prevRanger.borders[1] = currentGraduceInDeg - this.defaultIntervalBetweenRangers * this.step;
+            this.indicatorInputs.bordersForColdTemperature[1] = currentGraduceInNumber - this.defaultIntervalBetweenRangers;
           }
 
           if (nextRanger) {
-            nextRanger.borders[0] = currentGraduceInDeg + defaultIntervalBetweenRangers * this.step;
-            this.indicatorInputs.bordersForHotTemperature[0] = currentGraduceInNumber + defaultIntervalBetweenRangers;
+            nextRanger.borders[0] = currentGraduceInDeg + this.defaultIntervalBetweenRangers * this.step;
+            this.indicatorInputs.bordersForHotTemperature[0] = currentGraduceInNumber + this.defaultIntervalBetweenRangers;
           }
         })
       );
@@ -81,8 +85,8 @@ export class IndicatorComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   positionLines(): void {
-    const indicatorW = this.indicator.nativeElement.clientWidth / 2;
-    const indicatorH = this.indicator.nativeElement.clientHeight / 2;
+    const indicatorW = this.indicator.nativeElement.getBoundingClientRect().width / 2;
+    const indicatorH = this.indicator.nativeElement.getBoundingClientRect().height / 2;
 
     const totalElements = this.totalElements;
 
@@ -92,18 +96,18 @@ export class IndicatorComponent implements OnInit, AfterViewInit, OnDestroy {
 
     let item: number = 0;
 
-    let angle: number = Math.round(totalElements / 8 + totalElements / 4) * stepAngle;
-    let currentRotate: number = Math.round( totalElements / 8 + totalElements / 4) * stepRotate;
+    let startAngle: number = Math.round(totalElements / 8 + totalElements / 4) * stepAngle;
+    let startRotate: number = Math.round( totalElements / 8 + totalElements / 4) * stepRotate;
 
     const lineW = 28;
     const lineH = 1;
 
     while (item < totalElements) {
       const currentEl: any = document.getElementsByClassName(`indicator-line-${item}`)[0];
-      const leftPos = Math.round(indicatorW + radius * Math.cos(angle) - lineW/2);
-      const topPos = Math.round(indicatorH + radius * Math.sin(angle) - lineH/2);
+      const leftPos = Math.round(indicatorW + radius * Math.cos(startAngle) - lineW/2);
+      const topPos = Math.round(indicatorH + radius * Math.sin(startAngle) - lineH/2);
 
-      currentRotate = +currentRotate.toFixed(2);
+      startRotate = +startRotate.toFixed(2);
 
       if (item > Math.round(totalElements * 3/4)) {
         currentEl.parentNode.removeChild(currentEl);
@@ -113,18 +117,18 @@ export class IndicatorComponent implements OnInit, AfterViewInit, OnDestroy {
         currentEl.style.height = `${lineH}px`;
         currentEl.style.left = `${leftPos}px`;
         currentEl.style.top = `${topPos}px`;
-        currentEl.style.transform = `rotate(${currentRotate}deg)`;
-        currentEl.setAttribute('data-rotate-deg', currentRotate.toString());
+        currentEl.style.transform = `rotate(${startRotate}deg)`;
+        currentEl.setAttribute('data-rotate-deg', startRotate.toString());
         currentEl.setAttribute('data-number', item);
       }
 
-      angle += stepAngle;
-      currentRotate += stepRotate;
+      startAngle += stepAngle;
+      startRotate += stepRotate;
       ++item;
     }
 
     this._subscriptions.push(
-      this._updateBordersForRanger(0, this.hotTemperature - defaultIntervalBetweenRangers)
+      this._updateBordersForRanger(0, this.hotTemperature - this.defaultIntervalBetweenRangers)
           .subscribe(({ startRotateInDeg, borders }) => {
             this.minBorderInRotateDeg = startRotateInDeg;
             this.bordersForColdTemperature = borders;
@@ -132,7 +136,7 @@ export class IndicatorComponent implements OnInit, AfterViewInit, OnDestroy {
     );
 
     this._subscriptions.push(
-      this._updateBordersForRanger(this.coldTemperature + defaultIntervalBetweenRangers, Math.round(totalElements * 3/4))
+      this._updateBordersForRanger(this.coldTemperature + this.defaultIntervalBetweenRangers, Math.round(totalElements * 3/4))
           .subscribe(({ startRotateInDeg, borders }) => {
             this.minBorderInRotateDeg = startRotateInDeg;
             this.bordersForHotTemperature = borders;
@@ -141,20 +145,11 @@ export class IndicatorComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   updateGraduce(model): void {
-    this[model.name] = model.value;
+    this[model.borderName] = model.value;
   }
   
   updateGraduceInNumber({ indicatorProperty, rotateInDeg }): void {
     this[indicatorProperty] = Math.round((rotateInDeg - this.minBorderInRotateDeg) / this.step);
-  }
-
-  updateBackground(bg: string): void {
-    if (bg === 'default') {
-      this.defaultBackground = 'cool';
-      return;
-    }
-
-    this.defaultBackground = bg;
   }
 
   private _updateBordersForRanger(bottom, top): Observable<any> {

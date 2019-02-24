@@ -1,30 +1,40 @@
-<div class="indicator-wrapper" [ngClass]="[defaultBackground]" #indicator>
+<div
+        class="indicator-wrapper position-relative"
+        [style.backgroundColor]="colorIndicator"
+        #indicator
+>
+    <termostat-indicator-arc
+        [totalElements]="totalElements"
+        [lineColor]="colorIndicator"
+        [diametr]="arcDiametr"
+    ></termostat-indicator-arc>
+
     <span
             [ngClass]="['indicator-line-' + i]"
             class="indicator-line position-absolute"
             *ngFor="let el of totalElementsArr; let i = index"></span>
 
     <termostat-indicator-ranger
-        #coolRanger
         [indicatorProperty]="'coldTemperature'"
         [currentStep]="step"
         [startRotateInDeg]="minBorderInRotateDeg"
         [currentGraduceInNumber]="coldTemperature"
         [circleElement]="indicator"
+        [colorRanger]="'#00C5DE'"
         [borders]="bordersForColdTemperature.deg"
         (changeRander)="updateGraduceInNumber($event)"
     ></termostat-indicator-ranger>
 
     <termostat-indicator-ranger
-            #hotRanger
             [indicatorProperty]="'hotTemperature'"
             [currentStep]="step"
             [startRotateInDeg]="minBorderInRotateDeg"
             [currentGraduceInNumber]="hotTemperature"
             [circleElement]="indicator"
+            [colorRanger]="'#F64F69'"
             [borders]="bordersForHotTemperature.deg"
             (changeRander)="updateGraduceInNumber($event)"
-            (changeBackground)="updateBackground($event)"
+            (changeBackground)="colorIndicator = $event"
     ></termostat-indicator-ranger>
 
     <termostat-indicator-number-panel

@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation, Input } from '@angular/core';
 import { MatDialog, MatIconRegistry } from '@angular/material';
 import { DomSanitizer } from '@angular/platform-browser';
 
@@ -15,6 +15,7 @@ type TMode = 'advanced' | 'simple';
   encapsulation: ViewEncapsulation.ShadowDom
 })
 export class MainComponent implements OnInit {
+  @Input() defaultIntervalBetweenRangers: number;
 
   constructor(
       private matDialog: MatDialog,
@@ -39,6 +40,7 @@ export class MainComponent implements OnInit {
         title: 'Thermostat - Settings',
         coldTemperature: 12,
         hotTemperature: 34,
+        defaultIntervalBetweenRangers: this.defaultIntervalBetweenRangers
       }
     });
 

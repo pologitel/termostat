@@ -19,6 +19,7 @@ import { IndicatorComponent } from './dialogs/settings-dialog/components/indicat
 import { ChangeModePanelComponent } from './dialogs/settings-dialog/components/change-mode-panel/change-mode-panel.component';
 import { IndicatorNumberPanelComponent } from './dialogs/settings-dialog/components/indicator-number-panel/indicator-number-panel.component';
 import { IndicatorRangerComponent } from './dialogs/settings-dialog/components/indicator-ranger/indicator-ranger.component';
+import { IndicatorArcComponent } from './dialogs/settings-dialog/components/indicator-arc/indicator-arc.component';
 
 @NgModule({
   declarations: [
@@ -28,7 +29,8 @@ import { IndicatorRangerComponent } from './dialogs/settings-dialog/components/i
     IndicatorComponent,
     ChangeModePanelComponent,
     IndicatorNumberPanelComponent,
-    IndicatorRangerComponent
+    IndicatorRangerComponent,
+    IndicatorArcComponent
   ],
   imports: [
     FormsModule,

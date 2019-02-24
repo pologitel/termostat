@@ -15,6 +15,8 @@ import {
     ChangeDetectorRef
 } from '@angular/core';
 
+import { defaultBackgroundIndicator } from '../../../../shared/common';
+
 type TIndicatorProperty = 'coolTemperature' | 'hotTemperature' | string;
 
 interface ICenter {
@@ -40,7 +42,6 @@ export class IndicatorRangerComponent implements OnInit, AfterViewInit, OnChange
   @Output() updateBorders: EventEmitter<any> = new EventEmitter<any>();
 
   @ViewChild('ranger', { read: ElementRef }) public ranger: ElementRef<HTMLElement>;
-  @ViewChild('pickerCircle', { read: ElementRef }) public pickerCircle:ElementRef<HTMLElement>;
 
   @Input() indicatorProperty: TIndicatorProperty;
   @Input() currentStep: number;
@@ -48,6 +49,7 @@ export class IndicatorRangerComponent implements OnInit, AfterViewInit, OnChange
   @Input() currentGraduceInNumber: number;
   @Input() readonly circleElement: HTMLElement;
   @Input() borders: number[];
+  @Input() colorRanger: string;
 
   constructor(
       private _renderer: Renderer2,
@@ -131,7 +133,7 @@ export class IndicatorRangerComponent implements OnInit, AfterViewInit, OnChange
     this._onMouseMove(event);
 
     // change background if ranger hot
-    this.changeBackground.emit(this.indicatorProperty === 'hotTemperature' ? 'hot' : 'cool');
+    this.changeBackground.emit(this.colorRanger);
 
     // saved listeners
     this._globalHandlerDocMouseMove = this._renderer.listen('document', 'mousemove', this._onMouseMove.bind(this));
@@ -145,7 +147,7 @@ export class IndicatorRangerComponent implements OnInit, AfterViewInit, OnChange
     this._changeDetectorRef.detectChanges();
 
     // update background by default
-    this.changeBackground.emit('default');
+    this.changeBackground.emit(defaultBackgroundIndicator);
     this.updateBorders.emit({
         currentGraduceInDeg: this.transformNumberToDeg(this.currentGraduceInNumber),
         currentGraduceInNumber: this.currentGraduceInNumber
