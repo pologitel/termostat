@@ -51,13 +51,18 @@
             ],
             "styles": [
               "src/styles.scss",
-              "./node_modules/bootstrap/dist/css/bootstrap.min.css"
+              "./node_modules/bootstrap/dist/css/bootstrap.min.css",
+              "./node_modules/@fullcalendar/core/main.css",
+              "./node_modules/@fullcalendar/timeline/main.css",
+              "./node_modules/@fullcalendar/resource-timeline/main.css"
             ],
             "scripts": [
-              {
-                "input": "node_modules/document-register-element/build/document-register-element.js"
-              },
-              "./node_modules/fullcalendar/dist/fullcalendar.css"
+              "./node_modules/document-register-element/build/document-register-element.js",
+              "./node_modules/@fullcalendar/core/main.js",
+              "./node_modules/@fullcalendar/interaction/main.js",
+              "./node_modules/@fullcalendar/resource-common/main.js",
+              "./node_modules/@fullcalendar/timeline/main.js",
+              "./node_modules/@fullcalendar/resource-timeline/main.js"
             ],
             "stylePreprocessorOptions": {
               "includePaths": [

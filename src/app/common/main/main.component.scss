@@ -1,0 +1,103 @@
+@import "variables";
+@import "mixins";
+
+.schedule-wrapper {
+  min-height: 100vh;
+  background-color: #FAFBFC;
+  padding-top: 50px;
+  &__title {
+    @include font-config('Helvetica', 32px, 800, #3F4047, 39px) {
+      letter-spacing: 1.5px;
+      margin-bottom: 60px;
+    }
+  }
+}
+
+#calendar {
+  margin: 0 auto;
+  background-color: #fff;
+
+  & /deep/ .fc-license-message {
+    display: none;
+  }
+
+  & /deep/ .fc-head .fc-resource-area {
+    border: none;
+    background-color: #FAFBFC;
+  }
+
+  & /deep/ .fc-rows {
+    .fc-widget-content > div {
+      height: 80px !important;
+      .fc-cell-content {
+        height: 100%;
+        box-sizing: border-box;
+        display: flex;
+        align-items: center;
+        .fc-cell-text {
+          @include font-config('Helvetica', 14px, bold, #3F4047, 17px) {
+            letter-spacing: 0.6px;
+          }
+        }
+      }
+    }
+  }
+
+  & /deep/ .fc-timeline .fc-divider {
+    width: 0;
+  }
+
+  & /deep/ .event-thermostat {
+    margin: 13px 0 3px 0;
+    border: none !important;
+    padding: 0;
+    @include w_h(auto, 52px);
+    .fc-content {
+      padding: 0;
+      display: flex;
+      height: 100%;
+      border-radius: 4px;
+    }
+    .fc-title {
+      display: none;
+    }
+    &__icon {
+      @include w_h(43px, 100%);
+      background-color: #7067CC;
+      border: none;
+      position: relative;
+      &:before {
+        position: absolute;
+        content: '';
+        @include w_h(16px, 16px);
+        top: 50%;
+        left: 50%;
+        margin-left: -8px;
+        margin-top: -8px;
+        background-size: contain;
+        background-repeat: no-repeat;
+        background-position: center;
+      }
+      &.settings {
+        &:before {
+
+        }
+      }
+      &.home {
+        &:before {
+
+        }
+      }
+      &.sleep {
+        &:before {
+
+        }
+      }
+    }
+    &__temperature {
+      flex: auto;
+      align-items: center;
+      padding-left: 10px;
+    }
+  }
+}

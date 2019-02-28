@@ -23,14 +23,6 @@ $border-color: #F2F7FA;
       background: rgba(166, 165, 194, 0.13) no-repeat center center;
       @include w_h(20px, 20px);
 
-      //& > div {
-      //  @include w_h();
-      //}
-      //
-      //& /deep/ .mat-icon {
-      //  @include w_h();
-      //}
-
       &.cool {
         background-image: url('/assets/ic_cool.svg');
       }

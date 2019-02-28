@@ -27,6 +27,7 @@ interface IBorders {
 })
 export class IndicatorComponent implements OnInit, AfterViewInit, OnDestroy {
   private _subscriptions: Subscription[] = [];
+
   public step: number;
   public minBorderInRotateDeg: number;
   public bordersForColdTemperature: IBorders = {deg: [], num: []};

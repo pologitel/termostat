@@ -4,10 +4,10 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 import { createCustomElement } from '@angular/elements';
-import { FullCalendarModule } from 'ng-fullcalendar';
 
 // material module
 import { MaterialModule } from './modules/material/material.module';
+
 
 // services
 import { ApiBackService } from '@services/index';
@@ -34,7 +34,6 @@ import { IndicatorArcComponent } from './dialogs/settings-dialog/components/indi
     IndicatorArcComponent
   ],
   imports: [
-    FullCalendarModule,
     FormsModule,
     MaterialModule,
     BrowserModule,
@@ -53,7 +52,7 @@ export class AppModule {
   ngDoBootstrap(): void {
     if (environment.production) {
         const termostatPlugin = createCustomElement(MainComponent, { injector: this.injector });
-        customElements.define('termostat-main', termostatPlugin);
+        customElements.define('thermostat-main', termostatPlugin);
     }
   }
 }

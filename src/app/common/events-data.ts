@@ -1,0 +1,37 @@
+export const Events = [{
+    id: 1,
+    resourceId: 'monday',
+    start: '2019-02-28T02:00:00',
+    classNames: ['event-thermostat'],
+    coldTemperature: 23,
+    hotTemperature: 45,
+    type: 'sleep',
+    backgroundColor: '#F8F8FC'
+}, {
+    id: 2,
+    resourceId: 'wednesday',
+    start: '2019-02-28T12:00:00',
+    classNames: ['event-thermostat'],
+    coldTemperature: 1,
+    type: 'home',
+    hotTemperature: 19,
+    backgroundColor: '#F8F8FC'
+}, {
+    id: 3,
+    resourceId: 'tuesday',
+    start: '2019-02-28T09:00:00',
+    classNames: ['event-thermostat'],
+    coldTemperature: 30,
+    type: 'home',
+    hotTemperature: 67,
+    backgroundColor: '#F8F8FC'
+}, {
+    id: 4,
+    resourceId: 'tuesday',
+    start: '2019-02-28T13:00:00',
+    classNames: ['event-thermostat'],
+    coldTemperature: 0,
+    type: 'settings',
+    hotTemperature: 36,
+    backgroundColor: '#F8F8FC'
+}];
