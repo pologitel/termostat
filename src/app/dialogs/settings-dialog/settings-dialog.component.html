@@ -11,6 +11,7 @@
                     [coldTemperature]="data.coldTemperature"
                     [hotTemperature]="data.hotTemperature"
                     [defaultIntervalBetweenRangers]="data.defaultIntervalBetweenRangers"
+                    (changeTemperature)="updateTemperature($event)"
             ></termostat-indicator>
         </div>
 
@@ -20,12 +21,14 @@
 
         <div class="settings__actions justify-content-center row no-gutters">
             <button
+                    (click)="onCloseModal('delete')"
                     mat-raised-button
                     type="button"
                     class="col-2 action-delete"
             >Delete</button>
 
             <button
+                    (click)="onCloseModal('update')"
                     mat-raised-button
                     type="button"
                     class="col-2 action-complete"
@@ -34,7 +37,7 @@
 
         <div class="settings__actions justify-content-center row">
             <button
-                    [mat-dialog-close]="data.mode"
+                    (click)="onCloseModal('close')"
                     mat-raised-button
                     type="button"
                     class="action-close col-2"

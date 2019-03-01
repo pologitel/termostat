@@ -1,7 +1,7 @@
 export const Events = [{
     id: 1,
     resourceId: 'monday',
-    start: '2019-02-28T02:00:00',
+    end: '',
     classNames: ['event-thermostat'],
     coldTemperature: 23,
     hotTemperature: 45,
@@ -10,7 +10,6 @@ export const Events = [{
 }, {
     id: 2,
     resourceId: 'wednesday',
-    start: '2019-02-28T12:00:00',
     classNames: ['event-thermostat'],
     coldTemperature: 1,
     type: 'home',

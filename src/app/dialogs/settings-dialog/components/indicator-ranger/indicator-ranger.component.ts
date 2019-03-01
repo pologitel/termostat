@@ -35,11 +35,12 @@ export class IndicatorRangerComponent implements OnInit, AfterViewInit, OnChange
   private _globalHandlerDocMouseMove: Function;
   private _globalHandlerDocMouseUp: Function;
   private _isMoved: boolean = false;
-  isActive: boolean = false;
+  public isActive: boolean = false;
 
-  @Output() changeRander: EventEmitter<any> = new EventEmitter<any>();
+  @Output() changeRanger: EventEmitter<any> = new EventEmitter<any>();
   @Output() changeBackground: EventEmitter<any> = new EventEmitter<string>();
   @Output() updateBorders: EventEmitter<any> = new EventEmitter<any>();
+  // @Output() stopRanger: EventEmitter<any> = new EventEmitter<any>();
 
   @ViewChild('ranger', { read: ElementRef }) public ranger: ElementRef<HTMLElement>;
 
@@ -66,21 +67,16 @@ export class IndicatorRangerComponent implements OnInit, AfterViewInit, OnChange
   }
 
   ngAfterViewInit(): void {
-    const self = this;
     setTimeout(() => {
       const ranger: HTMLElement = this.ranger.nativeElement;
       const currentGraduceInDeg = this.transformNumberToDeg(this.currentGraduceInNumber);
 
       ranger.style.transform = `rotate(${currentGraduceInDeg}deg)`;
     }, 100);
-
-    // this.circleElement.addEventListener('mousedown', function (event: MouseEvent) {
-    //   if (event.target === this) self._onMouseDown(event);
-    // });
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    // update ranger when currentGraduce was changed
+    // update ranger when currentGraduceInNumber was changed
     if (changes.currentGraduceInNumber
         && (typeof changes.currentGraduceInNumber.currentValue === 'number')
         && !changes.currentGraduceInNumber.firstChange
@@ -119,7 +115,7 @@ export class IndicatorRangerComponent implements OnInit, AfterViewInit, OnChange
     if (rotateDeg >= minBorder && rotateDeg <= maxBorder) {
       this.ranger.nativeElement.style.transform = `rotate(${rotateDeg}deg)`;
 
-      this.changeRander.emit({
+      this.changeRanger.emit({
         indicatorProperty: this.indicatorProperty,
         rotateInDeg: Number(rotateDeg.toFixed(2))
       });
@@ -148,6 +144,8 @@ export class IndicatorRangerComponent implements OnInit, AfterViewInit, OnChange
 
     // update background by default
     this.changeBackground.emit(defaultBackgroundIndicator);
+
+    // update borders for other rangers
     this.updateBorders.emit({
         currentGraduceInDeg: this.transformNumberToDeg(this.currentGraduceInNumber),
         currentGraduceInNumber: this.currentGraduceInNumber
@@ -160,11 +158,6 @@ export class IndicatorRangerComponent implements OnInit, AfterViewInit, OnChange
     this._globalHandlerDocMouseMove();
   }
 
-  ngOnDestroy(): void {
-    // const self = this;
-    // this.circleElement.removeEventListener('mousedown', function (event: MouseEvent) {
-    //     if (event.target === this) self._onMouseDown(event);
-    // });
-  }
+  ngOnDestroy(): void {}
 
 }

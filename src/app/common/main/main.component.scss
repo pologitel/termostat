@@ -10,6 +10,13 @@
       letter-spacing: 1.5px;
       margin-bottom: 60px;
     }
+    &:after {
+      position: absolute;
+      content: '';
+      display: block;
+      @include w_h(24, 24px);
+      background: url('/assets/ic_rectangle_question.svg') no-repeat;
+    }
   }
 }
 
@@ -66,6 +73,7 @@
       background-color: #7067CC;
       border: none;
       position: relative;
+      flex: none;
       &:before {
         position: absolute;
         content: '';
@@ -98,6 +106,34 @@
       flex: auto;
       align-items: center;
       padding-left: 10px;
+      transition: opacity ease-in 0.3s;
+      &__hot {
+        color: #F64F69;
+        &:after {
+          border-color: #F64F69;
+        }
+      }
+      &__cold {
+        color: #38B5EB;
+        &:after {
+          border-color: #38B5EB;
+        }
+      }
+      & > span {
+        position: relative;
+        margin-right: 15px;
+        &:after {
+          position: absolute;
+          top: 2px;
+          right: -7px;
+          content: '';
+          display: block;
+          @include w_h(3px, 3px);
+          background-color: transparent;
+          border: 1px solid;
+          border-radius: 50%;
+        }
+      }
     }
   }
 }

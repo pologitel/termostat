@@ -4,6 +4,8 @@ import {
     AfterViewInit,
     OnDestroy,
     Input,
+    Output,
+    EventEmitter,
     ViewChild,
     ViewChildren,
     ElementRef, QueryList
@@ -26,6 +28,8 @@ interface IBorders {
   styleUrls: ['./indicator.component.scss']
 })
 export class IndicatorComponent implements OnInit, AfterViewInit, OnDestroy {
+  @Output() changeTemperature: EventEmitter<any> = new EventEmitter<any>();
+
   private _subscriptions: Subscription[] = [];
 
   public step: number;
@@ -65,6 +69,7 @@ export class IndicatorComponent implements OnInit, AfterViewInit, OnDestroy {
 
     this.listRangers.forEach((ranger: IndicatorRangerComponent): void => {
       this._subscriptions.push(
+        // subscribe on change borders`s indicator
         ranger.updateBorders.subscribe(({ currentGraduceInDeg, currentGraduceInNumber }) => {
           const prevRanger: IndicatorRangerComponent = this.listRangers.find((ranger: IndicatorRangerComponent) => {
             return ranger.transformNumberToDeg(ranger.currentGraduceInNumber) < currentGraduceInDeg;
@@ -147,7 +152,7 @@ export class IndicatorComponent implements OnInit, AfterViewInit, OnDestroy {
     );
   }
 
-  updateGraduce({ borderName, borderValue, model }): void {
+  updateGraduceFromNumberPanel({ borderName, borderValue, model }): void {
     if (borderName === 'top') {
         this[borderValue].num[1] = model.value - this.defaultIntervalBetweenRangers;
         this[borderValue].deg[1] = this.minBorderInRotateDeg + (model.value - this.defaultIntervalBetweenRangers) * this.step;
@@ -158,12 +163,21 @@ export class IndicatorComponent implements OnInit, AfterViewInit, OnDestroy {
         this[borderValue].deg[0] = this.minBorderInRotateDeg + (model.value + this.defaultIntervalBetweenRangers) * this.step;
     }
 
-    console.log(this.bordersForHotTemperature);
     this[model.name] = model.value;
+
+    this.changeTemperature.emit({
+       property: model.name,
+       value: model.value
+    });
   }
   
   updateGraduceInNumber({ indicatorProperty, rotateInDeg }): void {
     this[indicatorProperty] = Math.round((rotateInDeg - this.minBorderInRotateDeg) / this.step);
+
+    this.changeTemperature.emit({
+       property: indicatorProperty,
+       value: this[indicatorProperty]
+    });
   }
 
   private _updateBordersForRanger(bottom, top): Observable<any> {

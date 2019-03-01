@@ -22,7 +22,7 @@
         [circleElement]="indicator"
         [colorRanger]="'#00C5DE'"
         [borders]="bordersForColdTemperature.deg"
-        (changeRander)="updateGraduceInNumber($event)"
+        (changeRanger)="updateGraduceInNumber($event)"
     ></termostat-indicator-ranger>
 
     <termostat-indicator-ranger
@@ -33,7 +33,7 @@
             [circleElement]="indicator"
             [colorRanger]="'#F64F69'"
             [borders]="bordersForHotTemperature.deg"
-            (changeRander)="updateGraduceInNumber($event)"
+            (changeRanger)="updateGraduceInNumber($event)"
             (changeBackground)="colorIndicator = $event"
     ></termostat-indicator-ranger>
 
@@ -42,6 +42,6 @@
         [coldTemperature]="coldTemperature"
         [bordersForColdTemperature]="bordersForColdTemperature.num"
         [bordersForHotTemperature]="bordersForHotTemperature.num"
-        (changeTemperature)="updateGraduce($event)"
+        (changeTemperature)="updateGraduceFromNumberPanel($event)"
     ></termostat-indicator-number-panel>
 </div>

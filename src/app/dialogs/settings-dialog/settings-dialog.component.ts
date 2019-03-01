@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, Inject } from '@angular/core';
+import { Component, OnInit, Inject } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 
 @Component({
@@ -7,18 +7,25 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
   styleUrls: ['./settings-dialog.component.scss']
 })
 export class SettingsDialogComponent implements OnInit {
-  @Input() mode: string;
+  private _tempData;
 
   constructor(
       @Inject(MAT_DIALOG_DATA) public data,
       private dialogRef: MatDialogRef<any>
   ) { }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this._tempData = this.data;
+  }
 
-  onClose(): void {
+  updateTemperature({ property, value }): void {
+    this.data[property] = value;
+  }
+
+  onCloseModal(status: string): void {
     this.dialogRef.close({
-      mode: this.data.mode
-    })
+      status,
+      data: this.data
+    });
   }
 }
