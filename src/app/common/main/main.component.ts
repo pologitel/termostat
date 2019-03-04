@@ -23,7 +23,16 @@ type TMode = 'advanced' | 'simple';
   styleUrls: ['./main.component.scss']
 })
 export class MainComponent implements OnInit {
-  @Input() defaultIntervalBetweenRangers: number = defaultIntervalBetweenRangers;
+  @Input() defaultIntervalBetweenRangers = defaultIntervalBetweenRangers;
+  @Input() calendarResourses: any[];
+  @Input() events: any[];
+  @Input() eventClickCallback: Function;
+
+  private _calendar;
+
+  get calendar() {
+      return this._calendar;
+  }
 
   constructor(
       private matDialog: MatDialog,
@@ -32,9 +41,9 @@ export class MainComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.registerMatIcons();
+     this.registerMatIcons();
 
-    const calendar = new Calendar(document.getElementById('calendar'), {
+    const calendar = this._calendar = new Calendar(document.getElementById('calendar'), {
         plugins: [ resourceTimelinePlugin, interactionPlugin ],
         defaultView: 'resourceTimeline',
         header: false,
@@ -54,8 +63,8 @@ export class MainComponent implements OnInit {
                 field: 'dayOfWeek'
             }
         ],
-        resources: Resources,
-        events: Events.map((event: any) => {
+        resources: this.calendarResourses || Resources,
+        events: this.events || Events.map((event: any) => {
             const currentDate = moment();
             let generateHour = generateRandomNumber(0, 24 - currentDate.hour());
             generateHour = currentDate.hour() + generateHour > 23 ? 24 - (generateHour % 24) : generateHour;
@@ -64,6 +73,7 @@ export class MainComponent implements OnInit {
 
             event.start = moment(randomDate.add(remander, 'minute')).format('YYYY-MM-DDTHH:mm:00');
             event.end = moment(event.start).add(3, 'hour').format('YYYY-MM-DDTHH:mm:00');
+            event.backgroundColor = '#F8F8FC';
             return event;
         }),
         eventRender: (info) => {
@@ -78,7 +88,8 @@ export class MainComponent implements OnInit {
                     <div class="event-thermostat__temperature d-flex">
                         <span class="event-thermostat__temperature__hot">${hotTemperature}</span>
                         <span class="event-thermostat__temperature__cold">${coldTemperature}</span>
-                    </div>`);
+                    </div>
+            `);
 
             if (diff <= fullcalendarSettings.slotDuration * 2) {
                 $(info.el).find('.event-thermostat__temperature').css({opacity: 0});
@@ -121,6 +132,11 @@ export class MainComponent implements OnInit {
                     case 'close':
                         return;
                 }
+
+                if (this.eventClickCallback) this.eventClickCallback({
+                   calendar,
+                   eventInfo: {...data, status: status}
+                });
             });
         },
         eventMouseEnter: (info) => {

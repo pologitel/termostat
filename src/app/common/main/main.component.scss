@@ -3,7 +3,7 @@
 
 .schedule-wrapper {
   min-height: 100vh;
-  background-color: #FAFBFC;
+  background-color: $plugin_bg_color;
   padding-top: 50px;
   &__title {
     @include font-config('Helvetica', 32px, 800, #3F4047, 39px) {
@@ -24,13 +24,17 @@
   margin: 0 auto;
   background-color: #fff;
 
+  & /deep/ td {
+    border-color: $border_cells_color;
+  }
+
   & /deep/ .fc-license-message {
     display: none;
   }
 
   & /deep/ .fc-head .fc-resource-area {
     border: none;
-    background-color: #FAFBFC;
+    background-color: $plugin_bg_color;
   }
 
   & /deep/ .fc-rows {
@@ -50,8 +54,44 @@
     }
   }
 
-  & /deep/ .fc-timeline .fc-divider {
-    width: 0;
+  & /deep/ .fc-timeline {
+    .fc-divider {
+      width: 0;
+    }
+
+    .fc-widget-header {
+      border: none;
+      background-color: $plugin_bg_color;
+
+      .fc-scroller-clip {
+        overflow: visible;
+        .fc-scroller {
+          position: relative;
+          left: -22px;
+          top: -22px;
+        }
+      }
+
+      .fc-cell-text {
+        @include font-config('Helvetica', 14px, bold, #3F4047, 17px);
+      }
+    }
+
+    .fc-resource-area {
+      border-color: $border_calendar_color;
+      border-right-color: $border_cells_color;
+      .fc-widget-content {
+        border-bottom: 1px solid #fff;
+      }
+    }
+
+    .fc-time-area {
+      border-color: $border_calendar_color;
+    }
+
+    .fc-body {
+      border-color: $border_calendar_color;
+    }
   }
 
   & /deep/ .event-thermostat {
@@ -88,7 +128,7 @@
       }
       &.settings {
         &:before {
-
+          background-image: url('/assets/ic_settings.png');
         }
       }
       &.home {

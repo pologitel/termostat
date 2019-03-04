@@ -5,16 +5,14 @@ export const Events = [{
     classNames: ['event-thermostat'],
     coldTemperature: 23,
     hotTemperature: 45,
-    type: 'sleep',
-    backgroundColor: '#F8F8FC'
+    type: 'sleep'
 }, {
     id: 2,
     resourceId: 'wednesday',
     classNames: ['event-thermostat'],
     coldTemperature: 1,
     type: 'home',
-    hotTemperature: 19,
-    backgroundColor: '#F8F8FC'
+    hotTemperature: 19
 }, {
     id: 3,
     resourceId: 'tuesday',
@@ -22,8 +20,7 @@ export const Events = [{
     classNames: ['event-thermostat'],
     coldTemperature: 30,
     type: 'home',
-    hotTemperature: 67,
-    backgroundColor: '#F8F8FC'
+    hotTemperature: 67
 }, {
     id: 4,
     resourceId: 'tuesday',
@@ -31,6 +28,5 @@ export const Events = [{
     classNames: ['event-thermostat'],
     coldTemperature: 0,
     type: 'settings',
-    hotTemperature: 36,
-    backgroundColor: '#F8F8FC'
+    hotTemperature: 36
 }];

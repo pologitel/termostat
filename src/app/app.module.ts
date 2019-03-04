@@ -8,10 +8,6 @@ import { createCustomElement } from '@angular/elements';
 // material module
 import { MaterialModule } from './modules/material/material.module';
 
-
-// services
-import { ApiBackService } from '@services/index';
-
 import { AppComponent } from './app.component';
 import { MainComponent } from './common/main/main.component';
 import { SettingsDialogComponent } from './dialogs/settings-dialog/settings-dialog.component';
@@ -40,19 +36,16 @@ import { IndicatorArcComponent } from './dialogs/settings-dialog/components/indi
     BrowserAnimationsModule,
     HttpClientModule
   ],
-  providers: [
-    ApiBackService
-  ],
   entryComponents: [MainComponent, SettingsDialogComponent],
   bootstrap: !environment.production ? [AppComponent] : []
 })
 export class AppModule {
-  constructor(private injector: Injector) {}
-
-  ngDoBootstrap(): void {
-    if (environment.production) {
-        const termostatPlugin = createCustomElement(MainComponent, { injector: this.injector });
-        customElements.define('thermostat-main', termostatPlugin);
-    }
+  constructor(private injector: Injector) {
+      if (environment.production) {
+          const termostatPlugin = createCustomElement(MainComponent, { injector });
+          customElements.define('thermostat-main', termostatPlugin);
+      }
   }
+
+  ngDoBootstrap(): void {}
 }
