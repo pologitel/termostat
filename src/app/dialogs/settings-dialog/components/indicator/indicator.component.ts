@@ -13,7 +13,7 @@ import {
 import { Observable, of, Subscription } from 'rxjs';
 import { delay } from 'rxjs/operators';
 
-import { defaultBackgroundIndicator, defaultIntervalBetweenRangers } from '../../../../shared/common';
+import * as Shared from '../../../../shared/common';
 import { IndicatorRangerComponent } from '../indicator-ranger/indicator-ranger.component';
 import { IndicatorNumberPanelComponent } from '../indicator-number-panel/indicator-number-panel.component';
 
@@ -36,7 +36,7 @@ export class IndicatorComponent implements OnInit, AfterViewInit, OnDestroy {
   public minBorderInRotateDeg: number;
   public bordersForColdTemperature: IBorders = {deg: [], num: []};
   public bordersForHotTemperature: IBorders = {deg: [], num: []};
-  public colorIndicator: string = defaultBackgroundIndicator;
+  public colorIndicator: string = Shared.defaultBackgroundIndicator;
   public arcDiametr: number;
 
   @ViewChildren(IndicatorRangerComponent) listRangers: QueryList<IndicatorRangerComponent>;
@@ -45,9 +45,9 @@ export class IndicatorComponent implements OnInit, AfterViewInit, OnDestroy {
 
   @Input() coldTemperature: number;
   @Input() hotTemperature: number;
-  @Input() mode: string;
+  @Input() readonly calendarMode: Shared.TMode;
   @Input() totalElements: number;
-  @Input() defaultIntervalBetweenRangers: number = defaultIntervalBetweenRangers;
+  @Input() defaultIntervalBetweenRangers: number = Shared.defaultIntervalBetweenRangers;
   get totalElementsArr(): any[] {
     return new Array(this.totalElements);
   }

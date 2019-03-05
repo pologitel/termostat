@@ -15,7 +15,7 @@ import {
     ChangeDetectorRef
 } from '@angular/core';
 
-import { defaultBackgroundIndicator } from '../../../../shared/common';
+import * as Shared from '../../../../shared/common';
 
 type TIndicatorProperty = 'coolTemperature' | 'hotTemperature' | string;
 
@@ -40,10 +40,10 @@ export class IndicatorRangerComponent implements OnInit, AfterViewInit, OnChange
   @Output() changeRanger: EventEmitter<any> = new EventEmitter<any>();
   @Output() changeBackground: EventEmitter<any> = new EventEmitter<string>();
   @Output() updateBorders: EventEmitter<any> = new EventEmitter<any>();
-  // @Output() stopRanger: EventEmitter<any> = new EventEmitter<any>();
 
   @ViewChild('ranger', { read: ElementRef }) public ranger: ElementRef<HTMLElement>;
 
+  @Input() readonly calendarMode: Shared.TMode;
   @Input() indicatorProperty: TIndicatorProperty;
   @Input() currentStep: number;
   @Input() startRotateInDeg: number;
@@ -143,7 +143,7 @@ export class IndicatorRangerComponent implements OnInit, AfterViewInit, OnChange
     this._changeDetectorRef.detectChanges();
 
     // update background by default
-    this.changeBackground.emit(defaultBackgroundIndicator);
+    this.changeBackground.emit(Shared.defaultBackgroundIndicator);
 
     // update borders for other rangers
     this.updateBorders.emit({

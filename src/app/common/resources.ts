@@ -1,4 +1,6 @@
-export const Resources = [
+import { IResource } from '../interfaces/resource';
+
+export const Resources: IResource[] = [
     {
         id: 'monday',
         dayOfWeek: 'Monday'

@@ -5,7 +5,6 @@ import { MatDialogModule, MatButtonModule, MatIconModule, MatInputModule } from 
 const MaterialModules = [
     MatButtonModule,
     MatDialogModule,
-    MatIconModule,
     MatInputModule
 ];
 

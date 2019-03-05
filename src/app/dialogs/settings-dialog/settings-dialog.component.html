@@ -6,7 +6,7 @@
             <termostat-indicator
                     id="indicator"
                     class="position-relative m-auto"
-                    [mode]="data.mode"
+                    [calendarMode]="data.calendarMode"
                     [totalElements]="120"
                     [coldTemperature]="data.coldTemperature"
                     [hotTemperature]="data.hotTemperature"
@@ -17,7 +17,8 @@
 
         <div class="settings__change-mode-panel row justify-content-center no-gutters">
             <termostat-change-mode-panel
-                [mode]="data.mode"
+                [type]="data.type"
+                [calendarMode]="data.calendarMode"
                 (changeMode)="updateMode($event)"
             ></termostat-change-mode-panel>
         </div>

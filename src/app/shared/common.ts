@@ -3,7 +3,9 @@ export const defaultIntervalBetweenRangers = 3;
 export const defaultBackgroundIndicator = '#00C5DE';
 
 export const fullcalendarSettings = {
-  slotDuration: 30
+  resourceAreaWidth: 96,
+  slotDuration: 30,
+  backgroundColorEvent: '#F8F8FC'
 };
 
 export function generateRandomNumber(min, max): number {
@@ -11,3 +13,5 @@ export function generateRandomNumber(min, max): number {
     rand = Math.round(rand);
     return rand;
 }
+
+export type TMode = 'advanced' | 'simple' | 'intermediate';

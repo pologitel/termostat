@@ -1,36 +1,31 @@
-export const Events = [{
+import { IEvent } from '../interfaces/event';
+
+export const EventsMock: IEvent[] = [{
     id: 1,
     resourceId: 'monday',
-    end: '',
     classNames: ['event-thermostat'],
     coldTemperature: 23,
     hotTemperature: 45,
-    type: 'sleep',
-    mode: 'heat'
+    type: 'sleep'
 }, {
     id: 2,
     resourceId: 'wednesday',
     classNames: ['event-thermostat'],
     coldTemperature: 1,
     hotTemperature: 19,
-    type: 'home',
-    mode: 'cold'
+    type: 'settings'
 }, {
     id: 3,
     resourceId: 'tuesday',
-    start: '2019-02-28T09:00:00',
     classNames: ['event-thermostat'],
     coldTemperature: 30,
     hotTemperature: 67,
-    type: 'home',
-    mode: 'auto'
+    type: 'away'
 }, {
     id: 4,
     resourceId: 'tuesday',
-    start: '2019-02-28T13:00:00',
     classNames: ['event-thermostat'],
     coldTemperature: 0,
     hotTemperature: 36,
-    type: 'settings',
-    mode: 'off'
+    type: 'home'
 }];

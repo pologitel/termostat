@@ -1,21 +1,14 @@
 import { Component, OnInit, Input, OnChanges, SimpleChanges } from '@angular/core';
-import { MatDialog, MatIconRegistry } from '@angular/material';
-import { DomSanitizer } from '@angular/platform-browser';
+import { MatDialog } from '@angular/material';
 import { Calendar } from '@fullcalendar/core';
 import resourceTimelinePlugin from '@fullcalendar/resource-timeline';
 import interactionPlugin from '@fullcalendar/interaction';
 import * as moment from 'moment';
 
 import { SettingsDialogComponent } from '../../dialogs/settings-dialog/settings-dialog.component';
-import {
-    defaultIntervalBetweenRangers, DefaultWidthModal, fullcalendarSettings,
-    generateRandomNumber
-} from '../../shared/common';
-import { SvgIcons } from '../../shared/mat-icons';
-import { Events } from '../events-data';
+import * as Shared from '../../shared/common';
+import { EventsMock } from '../events-data';
 import { Resources } from '../resources';
-
-type TMode = 'advanced' | 'simple';
 
 @Component({
   selector: 'thermostat-main',
@@ -23,17 +16,16 @@ type TMode = 'advanced' | 'simple';
   styleUrls: ['./main.component.scss']
 })
 export class MainComponent implements OnInit, OnChanges {
-  @Input() defaultIntervalBetweenRangers = defaultIntervalBetweenRangers;
+  @Input() defaultIntervalBetweenRangers = Shared.defaultIntervalBetweenRangers;
   @Input() calendarResourses: any[];
   @Input() events: any[];
   @Input() eventClickCallback: Function;
+  @Input() mode: Shared.TMode = 'simple';
 
   private _calendar;
 
   constructor(
-      private matDialog: MatDialog,
-      private sanitizer: DomSanitizer,
-      private iconReg: MatIconRegistry,
+      private matDialog: MatDialog
   ) { }
 
   ngOnInit(): void {
@@ -44,7 +36,7 @@ export class MainComponent implements OnInit, OnChanges {
         height: 'auto',
         contentHeight: 65,
         slotLabelInterval: '4:00',
-        slotDuration: `00:${fullcalendarSettings.slotDuration}:00`,
+        slotDuration: `00:${Shared.fullcalendarSettings.slotDuration}:00`,
         scrollTime: '00:00:00',
         slotLabelFormat: [{
             hour: 'numeric',
@@ -58,16 +50,16 @@ export class MainComponent implements OnInit, OnChanges {
             }
         ],
         resources: this.calendarResourses || Resources,
-        events: this.events || Events.map((event: any) => {
+        events: this.events || EventsMock.map((event: any) => {
             const currentDate = moment();
-            let generateHour = generateRandomNumber(0, 24 - currentDate.hour());
+            let generateHour = Shared.generateRandomNumber(0, 24 - currentDate.hour());
             generateHour = currentDate.hour() + generateHour > 23 ? 24 - (generateHour % 24) : generateHour;
             const randomDate = currentDate.add(Math.round(Math.random()) === 1 ? generateHour : -generateHour, 'hour');
             const remander = 30 - (randomDate.minute() % 30);
 
             event.start = moment(randomDate.add(remander, 'minute')).format('YYYY-MM-DDTHH:mm:00');
             event.end = moment(event.start).add(3, 'hour').format('YYYY-MM-DDTHH:mm:00');
-            event.backgroundColor = '#F8F8FC';
+            event.backgroundColor = Shared.fullcalendarSettings.backgroundColorEvent;
             return event;
         }),
         eventRender: (info) => {
@@ -85,17 +77,17 @@ export class MainComponent implements OnInit, OnChanges {
                     </div>
             `);
 
-            if (diff <= fullcalendarSettings.slotDuration * 2) {
+            if (diff <= Shared.fullcalendarSettings.slotDuration * 2) {
                 $(info.el).find('.event-thermostat__temperature').css({opacity: 0});
-                if (diff === fullcalendarSettings.slotDuration) {
+                if (diff === Shared.fullcalendarSettings.slotDuration) {
                     $(info.el).css({width: '43px'});
                 }
             }
         },
         eventClick: (info) => {
-            const { coldTemperature, hotTemperature, mode } = info.event.extendedProps;
+            const { coldTemperature, hotTemperature, type } = info.event.extendedProps;
 
-            const widthModal = window.innerWidth < DefaultWidthModal ? '80%' : `${DefaultWidthModal}px`;
+            const widthModal = window.innerWidth < Shared.DefaultWidthModal ? '80%' : `${Shared.DefaultWidthModal}px`;
 
             const openDialogSettings = this.matDialog.open(SettingsDialogComponent, {
                 panelClass: 'settings-termostat',
@@ -103,11 +95,11 @@ export class MainComponent implements OnInit, OnChanges {
                 height: '100vh',
                 autoFocus: false,
                 data: {
-                    modeCalendar: 'simple',
+                    calendarMode: this.mode,
                     title: 'Thermostat - Settings',
                     coldTemperature,
                     hotTemperature,
-                    mode,
+                    type,
                     eventId: info.event.id,
                     defaultIntervalBetweenRangers: this.defaultIntervalBetweenRangers
                 }
@@ -120,7 +112,7 @@ export class MainComponent implements OnInit, OnChanges {
                     case 'update':
                         event.setExtendedProp('coldTemperature', data.coldTemperature);
                         event.setExtendedProp('hotTemperature', data.hotTemperature);
-                        event.setExtendedProp('mode', data.mode);
+                        event.setExtendedProp('mode', data.type);
                         break;
                     case 'delete':
                         event.remove();
@@ -138,12 +130,11 @@ export class MainComponent implements OnInit, OnChanges {
         eventMouseEnter: (info) => {
             const $el = $(info.el);
             const $tempEl = $el.find('.event-thermostat__temperature');
-            let start = info.event.start && moment(info.event.start);
-            let end = info.event.end && moment(info.event.end);
-
+            const start = info.event.start && moment(info.event.start);
+            const end = info.event.end && moment(info.event.end);
             const diff = end.diff(start, 'minutes');
 
-            if (diff <= fullcalendarSettings.slotDuration * 2) {
+            if (diff <= Shared.fullcalendarSettings.slotDuration * 2) {
                 const iconWidth = $el.find('.event-thermostat__icon').width();
                 const temperatureWidth = $tempEl.width();
 
@@ -154,14 +145,13 @@ export class MainComponent implements OnInit, OnChanges {
         eventMouseLeave: (info) => {
             const $el = $(info.el);
             const $tempEl = $el.find('.event-thermostat__temperature');
-            let start = info.event.start && moment(info.event.start);
-            let end = info.event.end && moment(info.event.end);
-
+            const start = info.event.start && moment(info.event.start);
+            const end = info.event.end && moment(info.event.end);
             const diff = end.diff(start, 'minutes');
 
-            if (diff <= fullcalendarSettings.slotDuration * 2) {
+            if (diff <= Shared.fullcalendarSettings.slotDuration * 2) {
                 $tempEl.css({opacity: 0});
-                if (diff === fullcalendarSettings.slotDuration) {
+                if (diff === Shared.fullcalendarSettings.slotDuration) {
                     $el.css({width: '43px'});
                     return;
                 }
@@ -169,7 +159,7 @@ export class MainComponent implements OnInit, OnChanges {
             }
         },
         editable: true,
-        resourceAreaWidth: 96
+        resourceAreaWidth: Shared.fullcalendarSettings.resourceAreaWidth
     });
 
     calendar.render();
@@ -181,6 +171,21 @@ export class MainComponent implements OnInit, OnChanges {
       const { events, calendarResourses } = changes;
 
       if (events && events.currentValue) {
+          const newListEvents: any[] = events.currentValue;
+          const currentListEvents: any[] = this._calendar.getEventSources();
+
+          if (currentListEvents && currentListEvents.constructor.name === 'Array') {
+              currentListEvents.forEach((oldEvent) => {
+                  const event = this._calendar.getEventSourceById(oldEvent.id);
+
+                  event.remove();
+              });
+          }
+
+          newListEvents.forEach((newEvent) => {
+            this._calendar.addEventSource(newEvent);
+          });
+
           this._calendar.refetchEvents();
       }
 
@@ -203,11 +208,5 @@ export class MainComponent implements OnInit, OnChanges {
                       .append(`<span class="fc-cell-midday">${moment(el.dataset.date).format('A')}</span>`);
               }
           });
-  }
-
-  private registerMatIcons(): void {
-    SvgIcons.forEach((icon: {name: string, path: string}) => {
-      this.iconReg.addSvgIcon(icon.name, this.sanitizer.bypassSecurityTrustResourceUrl(icon.path));
-    });
   }
 }

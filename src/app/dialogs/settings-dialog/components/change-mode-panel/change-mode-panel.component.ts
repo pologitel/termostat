@@ -10,7 +10,9 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 })
 export class ChangeModePanelComponent implements OnInit {
   @Output() changeMode: EventEmitter<string> = new EventEmitter<string>();
-  @Input() mode: string = 'cool';
+
+  @Input() type: string;
+  @Input() readonly calendarMode: string;
 
   constructor() { }
 

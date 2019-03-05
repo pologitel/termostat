@@ -2,7 +2,7 @@
     <div
             class="mode cold col-6 position-relative"
             (click)="onChangeMode('cold')"
-            [class.active]="mode === 'cold'"
+            [class.active]="type === 'cold'"
     >
         <span class="text">Cool</span>
 
@@ -12,7 +12,7 @@
     <div
             class="mode heat col-6 position-relative"
             (click)="onChangeMode('heat')"
-            [class.active]="mode === 'heat'"
+            [class.active]="type === 'heat'"
     >
         <span class="text">Heat</span>
 
@@ -22,7 +22,7 @@
     <div
             class="mode auto col-6 position-relative"
             (click)="onChangeMode('auto')"
-            [class.active]="mode === 'auto'"
+            [class.active]="type === 'auto'"
     >
         <span class="text">Auto</span>
 
@@ -32,7 +32,7 @@
     <div
             class="mode off col-6 position-relative"
             (click)="onChangeMode('off')"
-            [class.active]="mode === 'off'"
+            [class.active]="type === 'off'"
     >
         <span class="text">Off</span>
 
