@@ -1,33 +1,41 @@
 <div class="row panel">
-    <div class="mode col-6 position-relative">
+    <div
+            class="mode cold col-6 position-relative"
+            (click)="onChangeMode('cold')"
+            [class.active]="mode === 'cold'"
+    >
         <span class="text">Cool</span>
 
-        <div class="icon cool position-absolute">
-            <!--<mat-icon svgIcon="cool"></mat-icon>-->
-        </div>
+        <div class="icon position-absolute"></div>
     </div>
 
-    <div class="mode col-6 position-relative">
+    <div
+            class="mode heat col-6 position-relative"
+            (click)="onChangeMode('heat')"
+            [class.active]="mode === 'heat'"
+    >
         <span class="text">Heat</span>
 
-        <div class="icon heat position-absolute">
-            <!--<mat-icon svgIcon="heat"></mat-icon>-->
-        </div>
+        <div class="icon position-absolute"></div>
     </div>
 
-    <div class="mode col-6 position-relative">
+    <div
+            class="mode auto col-6 position-relative"
+            (click)="onChangeMode('auto')"
+            [class.active]="mode === 'auto'"
+    >
         <span class="text">Auto</span>
 
-        <div class="icon auto position-absolute">
-            <!--<mat-icon svgIcon="auto"></mat-icon>-->
-        </div>
+        <div class="icon position-absolute"></div>
     </div>
 
-    <div class="mode col-6 position-relative">
+    <div
+            class="mode off col-6 position-relative"
+            (click)="onChangeMode('off')"
+            [class.active]="mode === 'off'"
+    >
         <span class="text">Off</span>
 
-        <div class="icon off position-absolute">
-            <!--<mat-icon svgIcon="off"></mat-icon>-->
-        </div>
+        <div class="icon position-absolute"></div>
     </div>
 </div>

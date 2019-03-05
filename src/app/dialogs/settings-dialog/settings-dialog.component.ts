@@ -7,19 +7,19 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
   styleUrls: ['./settings-dialog.component.scss']
 })
 export class SettingsDialogComponent implements OnInit {
-  private _tempData;
-
   constructor(
       @Inject(MAT_DIALOG_DATA) public data,
       private dialogRef: MatDialogRef<any>
   ) { }
 
-  ngOnInit(): void {
-    this._tempData = this.data;
-  }
+  ngOnInit(): void {}
 
   updateTemperature({ property, value }): void {
     this.data[property] = value;
+  }
+
+  updateMode(modeName: string): void {
+    this.data.mode = modeName;
   }
 
   onCloseModal(status: string): void {

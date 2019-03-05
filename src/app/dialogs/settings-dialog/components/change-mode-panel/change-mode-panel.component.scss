@@ -6,6 +6,7 @@ $border-color: #F2F7FA;
 .panel {
   border: 1px solid $border-color;
   border-radius: 5px;
+  cursor: pointer;
   .mode {
     height: 100px;
     display: flex;
@@ -16,25 +17,78 @@ $border-color: #F2F7FA;
       letter-spacing: 0.3px;
     }
 
+    .text {
+      cursor: pointer;
+    }
+
+    &.active {
+      background-color: #fff;
+    }
+
+    &.cold {
+      .icon {
+        background-image: url('/assets/ic_auto.svg');
+      }
+      &.active {
+        color: $cold_color;
+        .icon {
+          background-image: url('/assets/ic_cool_act.svg');
+          background-color: #E5F9FB;
+        }
+      }
+    }
+
+    &.heat {
+      .icon {
+        background-image: url('/assets/ic_heat.svg');
+      }
+      &.active {
+        .text {
+          color: $hot_color;
+        }
+        .icon {
+          background-image: url('/assets/ic_heat_act.svg');
+          background-color: #FEEDF0;
+        }
+      }
+    }
+
+    &.auto {
+      .icon {
+        background-image: url('/assets/ic_auto.svg');
+      }
+      &.active {
+        .text {
+          color: $auto_color;
+        }
+        .icon {
+          background-image: url('/assets/ic_auto_act.svg');
+          background-color: #F0EFF9;
+        }
+      }
+    }
+
+    &.off {
+      .icon {
+        background-image: url('/assets/ic_off.svg');
+      }
+      &.active {
+        .text {
+          color: $off_color;
+        }
+        .icon {
+          background-image: url('/assets/ic_off_act.svg');
+          background-color: #F6F6F8;
+        }
+      }
+    }
+
     .icon {
       top: 10px;
       right: 10px;
       border-radius: 50%;
       background: rgba(166, 165, 194, 0.13) no-repeat center center;
       @include w_h(20px, 20px);
-
-      &.cool {
-        background-image: url('/assets/ic_cool.svg');
-      }
-      &.heat {
-        background-image: url('/assets/ic_heat.svg');
-      }
-      &.auto {
-        background-image: url('/assets/ic_auto.svg');
-      }
-      &.off {
-        background-image: url('/assets/ic_off.svg');
-      }
     }
 
     &:nth-child(odd) {

@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, OnChanges, SimpleChanges } from '@angular/core';
 import { MatDialog, MatIconRegistry } from '@angular/material';
 import { DomSanitizer } from '@angular/platform-browser';
 import { Calendar } from '@fullcalendar/core';
@@ -22,17 +22,13 @@ type TMode = 'advanced' | 'simple';
   templateUrl: './main.component.html',
   styleUrls: ['./main.component.scss']
 })
-export class MainComponent implements OnInit {
+export class MainComponent implements OnInit, OnChanges {
   @Input() defaultIntervalBetweenRangers = defaultIntervalBetweenRangers;
   @Input() calendarResourses: any[];
   @Input() events: any[];
   @Input() eventClickCallback: Function;
 
   private _calendar;
-
-  get calendar() {
-      return this._calendar;
-  }
 
   constructor(
       private matDialog: MatDialog,
@@ -41,8 +37,6 @@ export class MainComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-     this.registerMatIcons();
-
     const calendar = this._calendar = new Calendar(document.getElementById('calendar'), {
         plugins: [ resourceTimelinePlugin, interactionPlugin ],
         defaultView: 'resourceTimeline',
@@ -99,7 +93,7 @@ export class MainComponent implements OnInit {
             }
         },
         eventClick: (info) => {
-            const { coldTemperature, hotTemperature } = info.event.extendedProps;
+            const { coldTemperature, hotTemperature, mode } = info.event.extendedProps;
 
             const widthModal = window.innerWidth < DefaultWidthModal ? '80%' : `${DefaultWidthModal}px`;
 
@@ -109,10 +103,11 @@ export class MainComponent implements OnInit {
                 height: '100vh',
                 autoFocus: false,
                 data: {
-                    mode: 'simple',
+                    modeCalendar: 'simple',
                     title: 'Thermostat - Settings',
                     coldTemperature,
                     hotTemperature,
+                    mode,
                     eventId: info.event.id,
                     defaultIntervalBetweenRangers: this.defaultIntervalBetweenRangers
                 }
@@ -125,6 +120,7 @@ export class MainComponent implements OnInit {
                     case 'update':
                         event.setExtendedProp('coldTemperature', data.coldTemperature);
                         event.setExtendedProp('hotTemperature', data.hotTemperature);
+                        event.setExtendedProp('mode', data.mode);
                         break;
                     case 'delete':
                         event.remove();
@@ -177,6 +173,36 @@ export class MainComponent implements OnInit {
     });
 
     calendar.render();
+
+    this._buildCalendarTimeLine();
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
+      const { events, calendarResourses } = changes;
+
+      if (events && events.currentValue) {
+          this._calendar.refetchEvents();
+      }
+
+      if (calendarResourses && calendarResourses.currentValue) {
+          this._calendar.rerenderResources();
+          this._calendar.refetchEvents();
+      }
+  }
+
+  private _buildCalendarTimeLine(): void {
+      $(this._calendar.el).find('.fc-head table')
+          .find('.fc-widget-header')
+          .css({ 'vertical-align': 'initial' })
+          .each(function() {
+              const el = this;
+
+              if (el.dataset.date) {
+                  $(el)
+                      .find('.fc-cell-content')
+                      .append(`<span class="fc-cell-midday">${moment(el.dataset.date).format('A')}</span>`);
+              }
+          });
   }
 
   private registerMatIcons(): void {

@@ -1,4 +1,4 @@
-<div class="col-12">
+<div class="col-12 settings-wrapper">
     <div class="settings">
         <h1 class="settings__title position-relative" [ngClass]="['mode-' + data.mode]">{{data.title || 'Thermostat - Settings'}}</h1>
 
@@ -16,7 +16,10 @@
         </div>
 
         <div class="settings__change-mode-panel row justify-content-center no-gutters">
-            <termostat-change-mode-panel></termostat-change-mode-panel>
+            <termostat-change-mode-panel
+                [mode]="data.mode"
+                (changeMode)="updateMode($event)"
+            ></termostat-change-mode-panel>
         </div>
 
         <div class="settings__actions justify-content-center row no-gutters">

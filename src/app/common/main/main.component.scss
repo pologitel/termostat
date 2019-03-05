@@ -68,12 +68,23 @@
         .fc-scroller {
           position: relative;
           left: -22px;
-          top: -22px;
+          top: -10px;
+          height: 60px;
         }
       }
 
-      .fc-cell-text {
-        @include font-config('Helvetica', 14px, bold, #3F4047, 17px);
+      .fc-cell-content {
+        overflow: visible;
+        .fc-cell-midday {
+          position: relative;
+          top: 15px;
+          left: -30px;
+          @include font-config('Helvetica', 10px, bold, #B3B2CB, 14px);
+        }
+
+        .fc-cell-text {
+          @include font-config('Helvetica', 14px, bold, #3F4047, 17px);
+        }
       }
     }
 
@@ -128,17 +139,22 @@
       }
       &.settings {
         &:before {
-          background-image: url('/assets/ic_settings.png');
+          background-image: url('/assets/ic_settings@3x.png');
         }
       }
       &.home {
         &:before {
-
+          background-image: url('/assets/ic_home@3x.png');
         }
       }
       &.sleep {
         &:before {
-
+          background-image: url('/assets/ic_sleep@3x.png');
+        }
+      }
+      &.away {
+        &:before {
+          background-image: url('/assets/ic_away@3x.png');
         }
       }
     }
@@ -148,15 +164,15 @@
       padding-left: 10px;
       transition: opacity ease-in 0.3s;
       &__hot {
-        color: #F64F69;
+        color: $hot_color;
         &:after {
-          border-color: #F64F69;
+          border-color: $hot_color;
         }
       }
       &__cold {
-        color: #38B5EB;
+        color: $cold_color;
         &:after {
-          border-color: #38B5EB;
+          border-color: $cold_color;
         }
       }
       & > span {

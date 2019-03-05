@@ -6,7 +6,7 @@ export const SvgIcons = [{
     path: '/assets/ic_cool.svg'
 }, {
     name: 'heat',
-    path: '/assets/ic_heat.svg'
+    path: '/assets/ic_heat_act.svg'
 }, {
     name: 'home',
     path: '/assets/ic_home.svg'

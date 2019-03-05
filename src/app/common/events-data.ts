@@ -5,28 +5,32 @@ export const Events = [{
     classNames: ['event-thermostat'],
     coldTemperature: 23,
     hotTemperature: 45,
-    type: 'sleep'
+    type: 'sleep',
+    mode: 'heat'
 }, {
     id: 2,
     resourceId: 'wednesday',
     classNames: ['event-thermostat'],
     coldTemperature: 1,
+    hotTemperature: 19,
     type: 'home',
-    hotTemperature: 19
+    mode: 'cold'
 }, {
     id: 3,
     resourceId: 'tuesday',
     start: '2019-02-28T09:00:00',
     classNames: ['event-thermostat'],
     coldTemperature: 30,
+    hotTemperature: 67,
     type: 'home',
-    hotTemperature: 67
+    mode: 'auto'
 }, {
     id: 4,
     resourceId: 'tuesday',
     start: '2019-02-28T13:00:00',
     classNames: ['event-thermostat'],
     coldTemperature: 0,
+    hotTemperature: 36,
     type: 'settings',
-    hotTemperature: 36
+    mode: 'off'
 }];

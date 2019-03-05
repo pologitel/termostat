@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 
 @Component({
   selector: 'termostat-change-mode-panel',
@@ -9,14 +9,15 @@ import { Component, OnInit, Input } from '@angular/core';
   }
 })
 export class ChangeModePanelComponent implements OnInit {
-  @Input() mode: string;
+  @Output() changeMode: EventEmitter<string> = new EventEmitter<string>();
+  @Input() mode: string = 'cool';
 
   constructor() { }
 
   ngOnInit(): void {}
 
   onChangeMode(modeName: string): void {
-
+    this.changeMode.emit(modeName);
   }
 
 }
