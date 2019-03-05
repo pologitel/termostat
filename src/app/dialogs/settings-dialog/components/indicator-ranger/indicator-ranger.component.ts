@@ -123,6 +123,8 @@ export class IndicatorRangerComponent implements OnInit, AfterViewInit, OnChange
   }
 
   public onMouseDown(event: MouseEvent): void {
+    if (this.calendarMode === 'simple') return;
+
     event.preventDefault();
     document.body.style.cursor = 'move';
 
@@ -137,6 +139,8 @@ export class IndicatorRangerComponent implements OnInit, AfterViewInit, OnChange
   }
 
   private _onMouseUp(): void {
+    if (this.calendarMode === 'simple') return;
+
     document.body.style.cursor = null;
     this.isActive = false;
     this._isMoved = false;

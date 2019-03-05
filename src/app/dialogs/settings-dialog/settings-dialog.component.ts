@@ -19,7 +19,7 @@ export class SettingsDialogComponent implements OnInit {
   }
 
   updateMode(modeName: string): void {
-    this.data.mode = modeName;
+    this.data.typeMode = modeName;
   }
 
   onCloseModal(status: string): void {

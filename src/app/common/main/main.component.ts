@@ -85,7 +85,7 @@ export class MainComponent implements OnInit, OnChanges {
             }
         },
         eventClick: (info) => {
-            const { coldTemperature, hotTemperature, type } = info.event.extendedProps;
+            const { coldTemperature, hotTemperature, typeMode } = info.event.extendedProps;
 
             const widthModal = window.innerWidth < Shared.DefaultWidthModal ? '80%' : `${Shared.DefaultWidthModal}px`;
 
@@ -99,7 +99,7 @@ export class MainComponent implements OnInit, OnChanges {
                     title: 'Thermostat - Settings',
                     coldTemperature,
                     hotTemperature,
-                    type,
+                    typeMode,
                     eventId: info.event.id,
                     defaultIntervalBetweenRangers: this.defaultIntervalBetweenRangers
                 }
@@ -112,7 +112,7 @@ export class MainComponent implements OnInit, OnChanges {
                     case 'update':
                         event.setExtendedProp('coldTemperature', data.coldTemperature);
                         event.setExtendedProp('hotTemperature', data.hotTemperature);
-                        event.setExtendedProp('mode', data.type);
+                        event.setExtendedProp('typeMode', data.typeMode);
                         break;
                     case 'delete':
                         event.remove();

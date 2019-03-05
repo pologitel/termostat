@@ -15,7 +15,7 @@
             *ngFor="let el of totalElementsArr; let i = index"></span>
 
     <termostat-indicator-ranger
-        [calendarMode]=""
+        [calendarMode]="calendarMode"
         [indicatorProperty]="'coldTemperature'"
         [currentStep]="step"
         [startRotateInDeg]="minBorderInRotateDeg"
@@ -27,6 +27,7 @@
     ></termostat-indicator-ranger>
 
     <termostat-indicator-ranger
+            [calendarMode]="calendarMode"
             [indicatorProperty]="'hotTemperature'"
             [currentStep]="step"
             [startRotateInDeg]="minBorderInRotateDeg"
@@ -39,6 +40,7 @@
     ></termostat-indicator-ranger>
 
     <termostat-indicator-number-panel
+        [calendarMode]="calendarMode"
         [hotTemperature]="hotTemperature"
         [coldTemperature]="coldTemperature"
         [bordersForColdTemperature]="bordersForColdTemperature.num"

@@ -9,7 +9,7 @@ import { NgModel } from '@angular/forms';
 export class IndicatorNumberPanelComponent implements OnInit {
   @Output() changeTemperature: EventEmitter<any> = new EventEmitter<any>();
 
-  @Input() calendarMode: string;
+  @Input() readonly calendarMode: string;
   @Input() hotTemperature: number;
   @Input() coldTemperature: number;
   @Input() bordersForColdTemperature: number[];

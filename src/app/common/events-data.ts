@@ -6,26 +6,30 @@ export const EventsMock: IEvent[] = [{
     classNames: ['event-thermostat'],
     coldTemperature: 23,
     hotTemperature: 45,
-    type: 'sleep'
+    type: 'sleep',
+    typeMode: 'heat'
 }, {
     id: 2,
     resourceId: 'wednesday',
     classNames: ['event-thermostat'],
     coldTemperature: 1,
     hotTemperature: 19,
-    type: 'settings'
+    type: 'settings',
+    typeMode: 'cold'
 }, {
     id: 3,
     resourceId: 'tuesday',
     classNames: ['event-thermostat'],
     coldTemperature: 30,
     hotTemperature: 67,
-    type: 'away'
+    type: 'away',
+    typeMode: 'off'
 }, {
     id: 4,
     resourceId: 'tuesday',
     classNames: ['event-thermostat'],
     coldTemperature: 0,
     hotTemperature: 36,
-    type: 'home'
+    type: 'home',
+    typeMode: 'off'
 }];

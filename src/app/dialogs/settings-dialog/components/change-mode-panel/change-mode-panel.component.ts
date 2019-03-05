@@ -19,6 +19,7 @@ export class ChangeModePanelComponent implements OnInit {
   ngOnInit(): void {}
 
   onChangeMode(modeName: string): void {
+    if (this.calendarMode === 'simple') return;
     this.changeMode.emit(modeName);
   }
 

@@ -26,9 +26,15 @@
         }
       }
 
-      .mode-advanced {
+      &.mode-advanced {
         &:after {
           content: 'Advanced mode';
+        }
+      }
+
+      &.mode-intermediate {
+        &:after {
+          content: 'Intermediate mode';
         }
       }
     }

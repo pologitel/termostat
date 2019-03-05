@@ -7,5 +7,6 @@ export interface IEvent {
     coldTemperature?: number;
     hotTemperature?: number;
     type?: string;
+    typeMode?: string;
     backgroundColor?: string;
 }

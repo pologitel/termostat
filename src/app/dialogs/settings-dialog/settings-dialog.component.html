@@ -1,6 +1,6 @@
 <div class="col-12 settings-wrapper">
     <div class="settings">
-        <h1 class="settings__title position-relative" [ngClass]="['mode-' + data.mode]">{{data.title || 'Thermostat - Settings'}}</h1>
+        <h1 class="settings__title position-relative" [ngClass]="['mode-' + data.calendarMode]">{{data.title || 'Thermostat - Settings'}}</h1>
 
         <div class="row settings__indicator-container">
             <termostat-indicator
@@ -17,13 +17,13 @@
 
         <div class="settings__change-mode-panel row justify-content-center no-gutters">
             <termostat-change-mode-panel
-                [type]="data.type"
+                [type]="data.typeMode"
                 [calendarMode]="data.calendarMode"
                 (changeMode)="updateMode($event)"
             ></termostat-change-mode-panel>
         </div>
 
-        <div class="settings__actions justify-content-center row no-gutters">
+        <div class="settings__actions justify-content-center row no-gutters" *ngIf="data.calendarMode !== 'simple'">
             <button
                     (click)="onCloseModal('delete')"
                     mat-raised-button

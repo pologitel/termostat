@@ -65,7 +65,7 @@ export class IndicatorComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   ngAfterViewInit(): void {
-    this.positionLines();
+    this._positionLines();
 
     this.listRangers.forEach((ranger: IndicatorRangerComponent): void => {
       this._subscriptions.push(
@@ -92,7 +92,7 @@ export class IndicatorComponent implements OnInit, AfterViewInit, OnDestroy {
     });
   }
 
-  positionLines(): void {
+  private _positionLines(): void {
     const indicatorW = this.indicator.nativeElement.getBoundingClientRect().width / 2;
     const indicatorH = this.indicator.nativeElement.getBoundingClientRect().height / 2;
 
