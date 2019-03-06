@@ -18,7 +18,7 @@ export class AppComponent implements OnInit {
 
   ngOnInit(): void {
     setTimeout(() => {
-      // this.mode = 'advanced';
+      this.mode = 'advanced';
 
       this.events = [{
           id: 1,

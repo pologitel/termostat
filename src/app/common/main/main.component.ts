@@ -9,6 +9,7 @@ import { SettingsDialogComponent } from '../../dialogs/settings-dialog/settings-
 import * as Shared from '../../shared/common';
 import { EventsMock } from '../events-data';
 import { Resources } from '../resources';
+import { environment } from '../../../environments/environment';
 
 @Component({
   selector: 'thermostat-main',
@@ -18,9 +19,12 @@ import { Resources } from '../resources';
 export class MainComponent implements OnInit, OnChanges {
   @Input() defaultIntervalBetweenRangers = Shared.defaultIntervalBetweenRangers;
   @Input() calendarResourses: any[];
-  @Input() events: any[];
+  @Input() calendarEvents: any[] = [];
   @Input() eventClickCallback: Function;
-  @Input() mode: Shared.TMode = 'simple';
+  @Input() eventDragStopCallback: Function;
+  @Input() eventResizeStopCallback: Function;
+  @Input() maxGraduce: number = 120;
+  @Input() mode: Shared.TMode = 'advanced';
 
   private _calendar;
 
@@ -50,7 +54,7 @@ export class MainComponent implements OnInit, OnChanges {
             }
         ],
         resources: this.calendarResourses || Resources,
-        events: (this.events.length > 0 && this.events) || EventsMock.map((event: any) => {
+        events: (this.calendarEvents.length > 0 && this.calendarEvents) || (!environment.production ? EventsMock.map((event: any) => {
             const currentDate = moment();
             let generateHour = Shared.generateRandomNumber(0, 24 - currentDate.hour());
             generateHour = currentDate.hour() + generateHour > 23 ? 24 - (generateHour % 24) : generateHour;
@@ -61,7 +65,7 @@ export class MainComponent implements OnInit, OnChanges {
             event.end = moment(event.start).add(3, 'hour').format('YYYY-MM-DDTHH:mm:00');
             event.backgroundColor = Shared.fullcalendarSettings.backgroundColorEvent;
             return event;
-        }),
+        }) : []),
         eventRender: (info) => {
             let start = info.event.start && moment(info.event.start);
             let end = info.event.end && moment(info.event.end);
@@ -100,6 +104,7 @@ export class MainComponent implements OnInit, OnChanges {
                     coldTemperature,
                     hotTemperature,
                     typeMode,
+                    maxGraduce: this.maxGraduce,
                     eventId: info.event.id,
                     defaultIntervalBetweenRangers: this.defaultIntervalBetweenRangers
                 }
@@ -159,6 +164,18 @@ export class MainComponent implements OnInit, OnChanges {
                 $el.css({width: ''});
             }
         },
+        eventDrop: ({ event }) => {
+            if (this.eventDragStopCallback) this.eventDragStopCallback({
+                calendar: this._calendar,
+                event
+            });
+        },
+        eventResize: ({ event }) => {
+            if (this.eventResizeStopCallback) this.eventResizeStopCallback({
+                calendar: this._calendar,
+                event
+            });
+        },
         editable: this.mode !== 'simple',
         resourceAreaWidth: Shared.fullcalendarSettings.resourceAreaWidth
     });
@@ -193,7 +210,6 @@ export class MainComponent implements OnInit, OnChanges {
 
       if (calendarResourses && calendarResourses.currentValue) {
           this._calendar.rerenderResources();
-          this._calendar.refetchEvents();
       }
 
       if (mode && mode.currentValue && mode.currentValue !== 'simple') {
