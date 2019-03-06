@@ -10,6 +10,7 @@ import * as Shared from '../../shared/common';
 import { EventsMock } from '../events-data';
 import { Resources } from '../resources';
 import { environment } from '../../../environments/environment';
+import { isHTML } from '../../shared/common';
 
 @Component({
   selector: 'thermostat-main',
@@ -18,7 +19,7 @@ import { environment } from '../../../environments/environment';
 })
 export class MainComponent implements OnInit, OnChanges {
   @Input() defaultIntervalBetweenRangers = Shared.defaultIntervalBetweenRangers;
-  @Input() calendarResourses: any[];
+  @Input() calendarResourses: any[] = [];
   @Input() calendarEvents: any[] = [];
   @Input() eventClickCallback: Function;
   @Input() eventDragStopCallback: Function;
@@ -53,7 +54,7 @@ export class MainComponent implements OnInit, OnChanges {
                 field: 'dayOfWeek'
             }
         ],
-        resources: this.calendarResourses || Resources,
+        resources: (this.calendarResourses.length > 0 && this.calendarResourses) || Resources,
         events: (this.calendarEvents.length > 0 && this.calendarEvents) || (!environment.production ? EventsMock.map((event: any) => {
             const currentDate = moment();
             let generateHour = Shared.generateRandomNumber(0, 24 - currentDate.hour());
@@ -67,22 +68,30 @@ export class MainComponent implements OnInit, OnChanges {
             return event;
         }) : []),
         eventRender: (info) => {
+
             let start = info.event.start && moment(info.event.start);
             let end = info.event.end && moment(info.event.end);
 
             const diff = end.diff(start, 'minutes');
-            const { coldTemperature, hotTemperature } = info.event.extendedProps;
+            const { coldTemperature, hotTemperature, type } = info.event.extendedProps;
+            const isHtmlIcon = isHTML(type);
 
-            $(info.el).find('.fc-content').prepend(`<div class="event-thermostat__icon ${info.event.extendedProps.type}"></div>`);
+            $(info.el).find('.fc-content').prepend(`
+                <div class="fc-timeline-event__icon d-flex justify-content-center align-items-center ${isHtmlIcon && this.mode === 'advanced' ? 'fc-timeline-event__icon-custom' : ''}">
+                    <div class="fc-timeline-event__icon__content ${isHtmlIcon && this.mode === 'advanced' ? 'fc-timeline-event__icon__custom-content' : isHtmlIcon ? '' : type}">
+                        ${isHtmlIcon && this.mode === 'advanced' ? type : ''}
+                    </div>
+                </div>`);
+
             $(info.el).find('.fc-content').append(`
-                    <div class="event-thermostat__temperature d-flex">
-                        <span class="event-thermostat__temperature__hot">${hotTemperature}</span>
-                        <span class="event-thermostat__temperature__cold">${coldTemperature}</span>
+                    <div class="fc-timeline-event__temperature d-flex">
+                        <span class="fc-timeline-event__temperature__hot">${hotTemperature}</span>
+                        <span class="fc-timeline-event__temperature__cold">${coldTemperature}</span>
                     </div>
             `);
 
             if (diff <= Shared.fullcalendarSettings.slotDuration * 2) {
-                $(info.el).find('.event-thermostat__temperature').css({opacity: 0});
+                $(info.el).find('.fc-timeline-event__temperature').css({opacity: 0});
                 if (diff === Shared.fullcalendarSettings.slotDuration) {
                     $(info.el).css({width: '43px'});
                 }
@@ -94,7 +103,7 @@ export class MainComponent implements OnInit, OnChanges {
             const widthModal = window.innerWidth < Shared.DefaultWidthModal ? '80%' : `${Shared.DefaultWidthModal}px`;
 
             const openDialogSettings = this.matDialog.open(SettingsDialogComponent, {
-                panelClass: 'settings-termostat',
+                panelClass: 'settings-thermostat',
                 width: widthModal,
                 height: '100vh',
                 autoFocus: false,
@@ -135,13 +144,13 @@ export class MainComponent implements OnInit, OnChanges {
         },
         eventMouseEnter: (info) => {
             const $el = $(info.el);
-            const $tempEl = $el.find('.event-thermostat__temperature');
+            const $tempEl = $el.find('.fc-timeline-event__temperature');
             const start = info.event.start && moment(info.event.start);
             const end = info.event.end && moment(info.event.end);
             const diff = end.diff(start, 'minutes');
 
             if (diff <= Shared.fullcalendarSettings.slotDuration * 2) {
-                const iconWidth = $el.find('.event-thermostat__icon').width();
+                const iconWidth = $el.find('.fc-timeline-event__icon').width();
                 const temperatureWidth = $tempEl.width();
 
                 $el.css({ width: `${iconWidth + temperatureWidth}px`});
@@ -150,7 +159,7 @@ export class MainComponent implements OnInit, OnChanges {
         },
         eventMouseLeave: (info) => {
             const $el = $(info.el);
-            const $tempEl = $el.find('.event-thermostat__temperature');
+            const $tempEl = $el.find('.fc-timeline-event__temperature');
             const start = info.event.start && moment(info.event.start);
             const end = info.event.end && moment(info.event.end);
             const diff = end.diff(start, 'minutes');
@@ -186,10 +195,10 @@ export class MainComponent implements OnInit, OnChanges {
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-      const { events, calendarResourses, mode } = changes;
+      const { calendarEvents, calendarResourses, mode } = changes;
 
-      if (events && events.currentValue && events.currentValue.length > 0) {
-          const newListEvents: any[] = events.currentValue;
+      if (calendarEvents && calendarEvents.currentValue && calendarEvents.currentValue.length > 0) {
+          const newListEvents: any[] = calendarEvents.currentValue;
           const currentListEvents: any[] = this._calendar.getEvents();
 
           if (currentListEvents && currentListEvents.constructor.name === 'Array') {

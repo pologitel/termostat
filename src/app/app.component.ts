@@ -10,11 +10,11 @@ import * as Shared from './shared/index';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent implements OnInit {
-  title = 'termostat';
-
   events: IEvent[] = [];
   mode: string = 'simple';
   eventClickCallback: Function;
+  eventDragEndCallback: Function;
+  eventResizeEndCallback: Function;
 
   ngOnInit(): void {
     setTimeout(() => {
@@ -23,7 +23,6 @@ export class AppComponent implements OnInit {
       this.events = [{
           id: 1,
           resourceId: 'monday',
-          classNames: ['event-thermostat'],
           coldTemperature: 12,
           hotTemperature: 45,
           type: 'sleep',
@@ -31,7 +30,6 @@ export class AppComponent implements OnInit {
       }, {
           id: 2,
           resourceId: 'wednesday',
-          classNames: ['event-thermostat'],
           coldTemperature: 11,
           hotTemperature: 21,
           type: 'settings',
@@ -39,18 +37,16 @@ export class AppComponent implements OnInit {
       }, {
           id: 3,
           resourceId: 'tuesday',
-          classNames: ['event-thermostat'],
           coldTemperature: 23,
           hotTemperature: 67,
-          type: 'away',
+          type: 'settings',
           typeMode: 'cold'
       }, {
           id: 4,
           resourceId: 'tuesday',
-          classNames: ['event-thermostat'],
           coldTemperature: 1,
           hotTemperature: 78,
-          type: 'home',
+          type: '<span>1</span>',
           typeMode: 'cold'
       }].map((event: IEvent) => {
           const currentDate = moment();
@@ -67,7 +63,15 @@ export class AppComponent implements OnInit {
 
       this.eventClickCallback = (info) => {
         console.log(info);
-      }
+      };
+
+      this.eventDragEndCallback = (info) => {
+        console.log(info);
+      };
+
+      this.eventResizeEndCallback = (info) => {
+        console.log(info);
+      };
     }, 5000);
   }
 }

@@ -98,7 +98,7 @@
     }
   }
 
-  & /deep/ .event-thermostat {
+  & /deep/ .fc-timeline-event {
     margin: 13px 0 3px 0;
     border: none !important;
     padding: 0;
@@ -119,38 +119,56 @@
       border: none;
       position: relative;
       flex: none;
-      &:before {
-        position: absolute;
-        content: '';
+      &__content {
         @include w_h(16px, 16px);
-        top: 50%;
-        left: 50%;
-        margin-left: -8px;
-        margin-top: -8px;
         background-size: contain;
         background-repeat: no-repeat;
         background-position: center;
-      }
-      &.settings {
-        &:before {
+        &.settings {
           background-image: url('/assets/ic_settings@3x.png');
         }
-      }
-      &.home {
-        &:before {
+        &.home {
           background-image: url('/assets/ic_home@3x.png');
         }
-      }
-      &.sleep {
-        &:before {
+        &.sleep {
           background-image: url('/assets/ic_sleep@3x.png');
         }
-      }
-      &.away {
-        &:before {
+        &.away {
           background-image: url('/assets/ic_away@3x.png');
         }
       }
+      //&:before {
+      //  position: absolute;
+      //  content: '';
+      //  @include w_h(16px, 16px);
+      //  top: 50%;
+      //  left: 50%;
+      //  margin-left: -8px;
+      //  margin-top: -8px;
+      //  background-size: contain;
+      //  background-repeat: no-repeat;
+      //  background-position: center;
+      //}
+      //&.settings {
+      //  &:before {
+      //    background-image: url('/assets/ic_settings@3x.png');
+      //  }
+      //}
+      //&.home {
+      //  &:before {
+      //    background-image: url('/assets/ic_home@3x.png');
+      //  }
+      //}
+      //&.sleep {
+      //  &:before {
+      //    background-image: url('/assets/ic_sleep@3x.png');
+      //  }
+      //}
+      //&.away {
+      //  &:before {
+      //    background-image: url('/assets/ic_away@3x.png');
+      //  }
+      //}
     }
     &__temperature {
       flex: auto;

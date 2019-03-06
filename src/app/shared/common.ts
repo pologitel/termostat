@@ -14,4 +14,10 @@ export function generateRandomNumber(min, max): number {
     return rand;
 }
 
+export function isHTML(str) {
+    const doc = new DOMParser().parseFromString(str, "text/html");
+    const isHtml = Array.from(doc.body.childNodes).some(node => node.nodeType === 1);
+    return isHtml;
+}
+
 export type TMode = 'advanced' | 'simple' | 'intermediate';

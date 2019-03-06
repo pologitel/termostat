@@ -25,6 +25,7 @@
 
         <div class="settings__actions justify-content-center row no-gutters" *ngIf="data.calendarMode !== 'simple'">
             <button
+                    *ngIf="data.calendarMode === 'advanced'"
                     (click)="onCloseModal('delete')"
                     mat-raised-button
                     type="button"
