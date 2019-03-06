@@ -137,38 +137,6 @@
           background-image: url('/assets/ic_away@3x.png');
         }
       }
-      //&:before {
-      //  position: absolute;
-      //  content: '';
-      //  @include w_h(16px, 16px);
-      //  top: 50%;
-      //  left: 50%;
-      //  margin-left: -8px;
-      //  margin-top: -8px;
-      //  background-size: contain;
-      //  background-repeat: no-repeat;
-      //  background-position: center;
-      //}
-      //&.settings {
-      //  &:before {
-      //    background-image: url('/assets/ic_settings@3x.png');
-      //  }
-      //}
-      //&.home {
-      //  &:before {
-      //    background-image: url('/assets/ic_home@3x.png');
-      //  }
-      //}
-      //&.sleep {
-      //  &:before {
-      //    background-image: url('/assets/ic_sleep@3x.png');
-      //  }
-      //}
-      //&.away {
-      //  &:before {
-      //    background-image: url('/assets/ic_away@3x.png');
-      //  }
-      //}
     }
     &__temperature {
       flex: auto;
