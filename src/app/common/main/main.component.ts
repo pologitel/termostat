@@ -50,7 +50,7 @@ export class MainComponent implements OnInit, OnChanges {
             }
         ],
         resources: this.calendarResourses || Resources,
-        events: this.events || EventsMock.map((event: any) => {
+        events: (this.events.length > 0 && this.events) || EventsMock.map((event: any) => {
             const currentDate = moment();
             let generateHour = Shared.generateRandomNumber(0, 24 - currentDate.hour());
             generateHour = currentDate.hour() + generateHour > 23 ? 24 - (generateHour % 24) : generateHour;
@@ -123,7 +123,8 @@ export class MainComponent implements OnInit, OnChanges {
 
                 if (this.eventClickCallback) this.eventClickCallback({
                    calendar,
-                   eventInfo: {...data, status: status}
+                   settingsInfo: {...data, status},
+                   event
                 });
             });
         },
@@ -158,7 +159,7 @@ export class MainComponent implements OnInit, OnChanges {
                 $el.css({width: ''});
             }
         },
-        editable: true,
+        editable: this.mode !== 'simple',
         resourceAreaWidth: Shared.fullcalendarSettings.resourceAreaWidth
     });
 
@@ -168,22 +169,23 @@ export class MainComponent implements OnInit, OnChanges {
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-      const { events, calendarResourses } = changes;
+      const { events, calendarResourses, mode } = changes;
 
-      if (events && events.currentValue) {
+      if (events && events.currentValue && events.currentValue.length > 0) {
           const newListEvents: any[] = events.currentValue;
-          const currentListEvents: any[] = this._calendar.getEventSources();
+          const currentListEvents: any[] = this._calendar.getEvents();
 
           if (currentListEvents && currentListEvents.constructor.name === 'Array') {
               currentListEvents.forEach((oldEvent) => {
-                  const event = this._calendar.getEventSourceById(oldEvent.id);
+                  const event = this._calendar.getEventById(oldEvent.id);
 
                   event.remove();
               });
           }
 
           newListEvents.forEach((newEvent) => {
-            this._calendar.addEventSource(newEvent);
+            newEvent.backgroundColor = Shared.fullcalendarSettings.backgroundColorEvent;
+            this._calendar.addEvent(newEvent);
           });
 
           this._calendar.refetchEvents();
@@ -192,6 +194,10 @@ export class MainComponent implements OnInit, OnChanges {
       if (calendarResourses && calendarResourses.currentValue) {
           this._calendar.rerenderResources();
           this._calendar.refetchEvents();
+      }
+
+      if (mode && mode.currentValue && mode.currentValue !== 'simple') {
+          this._calendar.setOption('editable', true);
       }
   }
 

@@ -20,6 +20,7 @@ export class IndicatorNumberPanelComponent implements OnInit {
   ngOnInit(): void {}
 
   onChanged(model: NgModel, borderValue: string, borderName: string) {
+    if (this.calendarMode === 'simple') return;
     if (model.value < this[model.name][0]) {
         model.reset(this[model.name][0]);
         return;

@@ -1,7 +1,7 @@
 export interface IEvent {
     id: string|number;
     resourceId: string|number;
-    statr?: string;
+    start?: string;
     end?: string;
     classNames?: string[];
     coldTemperature?: number;

@@ -17,6 +17,7 @@
                 (keypress)="onlyPositiveNumber($event)"
                 [min]="bordersForHotTemperature[0]"
                 [max]="bordersForHotTemperature[1]"
+                [disabled]="calendarMode === 'simple'"
                 maxlength="2"
                 #hotTemperatureModel="ngModel"
         >
@@ -33,6 +34,7 @@
                 (keypress)="onlyPositiveNumber($event)"
                 [min]="bordersForColdTemperature[0]"
                 [max]="bordersForColdTemperature[1]"
+                [disabled]="calendarMode === 'simple'"
                 maxlength="2"
                 #coldTemperatureModel="ngModel"
         >
