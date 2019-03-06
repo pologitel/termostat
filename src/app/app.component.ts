@@ -10,6 +10,7 @@ import * as Shared from './shared/index';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent implements OnInit {
+  maxGraduce: number = 180;
   events: IEvent[] = [];
   mode: string = 'simple';
   eventClickCallback: Function;
